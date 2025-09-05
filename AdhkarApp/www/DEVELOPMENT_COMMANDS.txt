@@ -12,11 +12,11 @@ cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"
 # After making edits, run these 3 commands:
 cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"
 cordova build android
-C:\Android\platform-tools\adb install -r "platforms\android\app\build\outputs\apk\debug\app-debug.apk"
+& 'C:\Android\platform-tools\adb.exe' install -r 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'
 
 ### 2. ONE-LINE COMPLETE WORKFLOW
-# All steps in one command:
-cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp" && cordova build android && C:\Android\platform-tools\adb install -r "platforms\android\app\build\outputs\apk\debug\app-debug.apk"
+# All steps in one command (PowerShell):
+cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"; cordova build android; & 'C:\Android\platform-tools\adb.exe' install -r 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'
 
 ### 3. INDIVIDUAL COMMANDS
 # Navigate to project:
@@ -25,30 +25,30 @@ cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"
 # Build APK:
 cordova build android
 
-# Install on phone (replace existing):
-C:\Android\platform-tools\adb install -r "platforms\android\app\build\outputs\apk\debug\app-debug.apk"
+# Install on phone (replace existing) - PowerShell syntax:
+& 'C:\Android\platform-tools\adb.exe' install -r 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'
 
-# Install fresh (if app not installed):
-C:\Android\platform-tools\adb install "platforms\android\app\build\outputs\apk\debug\app-debug.apk"
+# Install fresh (if app not installed) - PowerShell syntax:
+& 'C:\Android\platform-tools\adb.exe' install 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'
 
 ## USEFUL DEBUGGING COMMANDS
 # ==========================
 
 ### Check device connection:
-C:\Android\platform-tools\adb devices
+& 'C:\Android\platform-tools\adb.exe' devices
 
 ### Check Cordova requirements:
 cordova requirements
 
 ### Reset ADB if connection issues:
-C:\Android\platform-tools\adb kill-server
-C:\Android\platform-tools\adb start-server
+& 'C:\Android\platform-tools\adb.exe' kill-server
+& 'C:\Android\platform-tools\adb.exe' start-server
 
 ### Uninstall app from phone:
-C:\Android\platform-tools\adb uninstall io.cordova.hellocordova
+& 'C:\Android\platform-tools\adb.exe' uninstall com.islamic.adhkar
 
 ### View device logs (for debugging):
-C:\Android\platform-tools\adb logcat
+& 'C:\Android\platform-tools\adb.exe' logcat
 
 ### Clear Cordova cache (if build issues):
 cordova clean android
@@ -84,14 +84,28 @@ C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp\platforms
 ## COMMON ISSUES & SOLUTIONS
 # ===========================
 
+### "ANDROID_HOME undefined" or "Failed to find 'android' command": 
+ - IMPORTANT: Use PowerShell (not Command Prompt/cmd.exe) 
+ - Set environment variables PERMANENTLY (recommended): 
+   [Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Android", "User") 
+   $currentPath = [Environment]::GetEnvironmentVariable("PATH", "User"); [Environment]::SetEnvironmentVariable("PATH", "$currentPath;C:\Android\cmdline-tools\latest\bin;C:\Android\platform-tools", "User") 
+ - OR set for current session only: 
+   $env:ANDROID_HOME = "C:\Android" 
+   $env:PATH += ";C:\Android\cmdline-tools\latest\bin;C:\Android\platform-tools" 
+ - Verify with: echo $env:ANDROID_HOME 
+ - Check requirements: cordova requirements 
+ - If using cmd.exe: use 'set' commands instead of '$env:' 
+ - NOTE: After permanent setup, restart PowerShell/IDE to use new variables
+
 ### "Device unauthorized":
 - Check phone for USB debugging authorization popup
 - Enable USB debugging in Developer Options
-- Try: adb kill-server && adb start-server
+- Try: & 'C:\Android\platform-tools\adb.exe' kill-server; & 'C:\Android\platform-tools\adb.exe' start-server
 
-### "Build failed":
+### "Build failed" or "Cannot snapshot output property":
 - Run: cordova clean android
 - Then: cordova build android
+- If still failing, restart PowerShell and set environment variables again
 
 ### "App won't install":
 - Check if device has enough storage
@@ -112,11 +126,39 @@ PATH includes:
 - C:\Android\platform-tools
 - C:\gradle\gradle-8.5\bin
 
-## QUICK COMMANDS CHEAT SHEET
-# ============================
+### SET ENVIRONMENT VARIABLES (IMPORTANT: Use PowerShell, NOT Command Prompt!)
+# STEP 1: Open PowerShell (not cmd.exe)
+# Type 'powershell' in Start Menu or press Win+X and select "Windows PowerShell"
+
+# STEP 2: Set ANDROID_HOME for current session:
+$env:ANDROID_HOME = "C:\Android"
+
+# STEP 3: Set ANDROID_HOME permanently:
+[Environment]::SetEnvironmentVariable("ANDROID_HOME", "C:\Android", "User")
+
+# STEP 4: Add to PATH for current session:
+$env:PATH += ";C:\Android\cmdline-tools\latest\bin;C:\Android\platform-tools"
+
+# STEP 5: Add to PATH permanently:
+$currentPath = [Environment]::GetEnvironmentVariable("PATH", "User")
+[Environment]::SetEnvironmentVariable("PATH", "$currentPath;C:\Android\cmdline-tools\latest\bin;C:\Android\platform-tools", "User")
+
+### COMMAND PROMPT ALTERNATIVE (if you must use cmd.exe):
+# For current session only:
+set ANDROID_HOME=C:\Android
+set PATH=%PATH%;C:\Android\cmdline-tools\latest\bin;C:\Android\platform-tools
+
+### VERIFY ENVIRONMENT SETUP
+# Check if variables are set:
+echo $env:ANDROID_HOME
+echo $env:JAVA_HOME
+cordova requirements
+
+## QUICK COMMANDS CHEAT SHEET (PowerShell)
+# ==========================================
 cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"  # Navigate
 cordova build android                                                        # Build
-C:\Android\platform-tools\adb install -r "platforms\android\app\build\outputs\apk\debug\app-debug.apk"  # Install
-C:\Android\platform-tools\adb devices                                       # Check device
+& 'C:\Android\platform-tools\adb.exe' install -r 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'  # Install
+& 'C:\Android\platform-tools\adb.exe' devices                              # Check device
 
 # END OF REFERENCE FILE
