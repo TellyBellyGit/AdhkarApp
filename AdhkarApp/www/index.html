@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Adhkar & Ruqyah</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a8c4c;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --bg-color: #2d2d2d;
+            --card-bg: #3a3a3a;
+            --border-radius: 10px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        .light-mode {
+            --primary-color: #2c5e2e;
+            --secondary-color: #f8f5e6;
+            --text-color: #333;
+            --bg-color: #fff;
+            --card-bg: #f9f9f9;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+            padding-bottom: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+
+        .menu-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .menu-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .menu-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-card h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .menu-card p {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .menu-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #3a7a3c;
+            transform: translateY(-2px);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .icon-btn:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            background-color: var(--card-bg);
+        }
+
+        @media (max-width: 768px) {
+            .menu-options {
+                gap: 1rem;
+            }
+
+            .menu-card {
+                padding: 1.5rem;
+            }
+
+            .menu-title {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Islamic Adhkar & Ruqyah</h1>
+        <p>Collection of beneficial supplications and verses</p>
+    </header>
+
+    <div class="container">
+        <h2 class="menu-title">Select an Option</h2>
+        
+        <div class="menu-options">
+            <div class="menu-card" onclick="window.location.href='EveningMornindAdhkarv5.html'">
+                <div class="icon"><i class="fas fa-sun"></i></div>
+                <h2>1. Morning & Evening Adhkar</h2>
+                <p>Daily supplications for morning and evening</p>
+                <a href="EveningMornindAdhkarv5.html" class="btn">View</a>
+            </div>
+            
+            <div class="menu-card" onclick="window.location.href='shortRuqyah.html'">
+                <div class="icon"><i class="fas fa-book-open"></i></div>
+                <h2>2. Prophetic Ruqyah</h2>
+                <p>Quranic verses and supplications for healing</p>
+                <a href="shortRuqyah.html" class="btn">View</a>
+            </div>
+            
+            <div class="menu-card" onclick="window.location.href='manzilVerses.html'">
+                <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                <h2>3. Manzil</h2>
+                <p>Collection of verses for protection</p>
+                <a href="manzilVerses.html" class="btn">View</a>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="modeToggle" class="icon-btn" title="Toggle Light/Dark Mode">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 | Compiled for spiritual protection and healing</p>
+    </footer>
+
+    <script>
+        // Toggle dark/light mode
+        document.getElementById('modeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-mode');
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-sun')) {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        });
+    </script>
+</body>
+</html>

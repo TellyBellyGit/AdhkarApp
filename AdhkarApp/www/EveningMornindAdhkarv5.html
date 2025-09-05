@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Definitive Morning & Evening Adhkār</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a8c4c;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --bg-color: #2d2d2d;
+            --card-bg: #3a3a3a;
+            --border-radius: 10px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        .light-mode {
+            --primary-color: #2c5e2e;
+            --secondary-color: #f8f5e6;
+            --text-color: #333;
+            --bg-color: #fff;
+            --card-bg: #f9f9f9;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+            padding-bottom: 2rem;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 5px solid #d4af37;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .main-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #3a6e3c;
+            transform: translateY(-2px);
+        }
+
+        .btn.active {
+            background-color: #d4af37;
+        }
+
+        .toggle-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .icon-btn:hover {
+            background-color: #3a6e3c;
+            transform: translateY(-2px);
+        }
+
+        .icon-btn.active {
+            background-color: #d4af37;
+        }
+
+        .dhikr-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dhikr-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .dhikr-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .dhikr-number {
+            /* background-color: var(--primary-color); */
+            /* color: white; */
+            background-color: var(--card-bg); /* Changed from var(--primary-color) */
+            color: var(--text-color); /* Optional: change text color to blend */
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            opacity: 0.3;
+        }
+
+        .arabic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: right;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-family: 'Scheherazade New', 'Traditional Arabic', serif;
+        }
+
+        .transliteration, .translation {
+            font-style: italic;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .details {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+
+        .times, .source {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .source {
+            color: var(--primary-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Counter styles */
+        .counter-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            gap: 0.5rem;
+        }
+
+        .circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .circle.filled {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .counter-button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .counter-display {
+            margin-left: 0.5rem;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .reset-button {
+            padding: 0.5rem;
+            background-color: #4CAF50; /* Changed to green */
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: var(--transition);
+        }
+
+        .reset-button:hover {
+            background-color: #ff4c4c;
+        }
+
+        @media (max-width: 768px) {
+            .dhikr-section {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .arabic {
+                font-size: 1.5rem;
+            }
+            
+            .main-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-controls, .toggle-controls {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Definitive Morning & Evening Adhkār</h1>
+            <p>Remembrance of Allah for peace and protection throughout the day and night</p>
+            <div style="margin-top: 1rem;">
+                <a href="index.html" class="btn" style="background-color: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; color: white; display: inline-block;"><i class="fas fa-home"></i> Return to Menu</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-controls">
+            <div class="filter-controls">
+                <button class="btn active" id="showAll">All Adhkār</button>
+                <button class="btn" id="showMorning">Morning</button>
+                <button class="btn" id="showEvening">Evening</button>
+            </div>
+            
+            <div class="toggle-controls">
+                <button class="icon-btn" id="toggleTransliteration" title="Toggle Transliteration">
+                    <i class="fas fa-language"></i>
+                </button>
+                <button class="icon-btn" id="toggleTranslation" title="Toggle Translation">
+                    <i class="fas fa-book"></i>
+                </button>
+                <button class="icon-btn" id="modeToggle" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="dhikr-section">
+            <!-- Dhikr 1 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">1</div>
+                <div class="arabic">اللَّهُ لَا إِلَـٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ</div>
+                <div class="transliteration">Allāhu lā ilāha illā huwa al-ḥayyu al-qayyūm, lā taʾkhudhuhu sinatun wa lā nawm, lahu mā fī as-samāwāti wa mā fī al-arḍ, man dhā alladhī yashfa'u 'indahu illā bi-idhnih, ya'lamu mā bayna aydīhim wa mā khalfahum, wa lā yuḥīṭūna bi-shay'in min 'ilmihi illā bi-mā shāʾ, wasi'a kursiyyuhu as-samāwāti wa al-arḍ, wa lā yaʾūduhu ḥifẓuhumā, wa huwa al-'aliyyu al-'aẓīm</div>
+                <div class="translation">Allah - there is no deity except Him, the Ever-Living, the Sustainer of [all] existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is [presently] before them and what will be after them, and they encompass not a thing of His knowledge except for what He wills. His Kursī extends over the heavens and the earth, and their preservation tires Him not. And He is the Most High, the Most Great.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> Once.</div>
+                    <div class="source"><strong>Source:</strong> al-Nasā'ī al-Sunan al-Kubrā (no. 9848), al-Ṭabarānī al-Mu'jam al-Kabīr (no. 7532). Authenticated by al-Albānī (Ṣaḥīḥ al-Targhīb, 662).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="1">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 2 -->
+            <div class="dhikr-card" data-times="evening">
+                <div class="dhikr-number">2</div>
+                <div class="arabic">آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ. لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ</div>
+                <div class="transliteration">Āmana ar-rasūlu bimā unzila ilayhi min rabbihi wal-mu'minūn, kullun āmana billāhi wa malā'ikatihi wa kutubihi wa rusulih, lā nufarriqu bayna aḥadin min rusulih, wa qālū sami'nā wa aṭa'nā, ghufrānaka rabbanā wa ilayka al-maṣīr. Lā yukallifu Allāhu nafsan illā wus'ahā, lahā mā kasabat wa 'alayhā mā aktasabat, rabbanā lā tu'ākhidhnā in nasīnā aw akhta'nā, rabbanā wa lā taḥmil 'alaynā iṣran kamā ḥamaltahu 'alā alladhīna min qablinā, rabbanā wa lā tuḥammilnā mā lā ṭāqata lanā bih, wa-'fu 'annā wa-ghfir lanā wa-rḥamnā, anta mawlānā fa-nṣurnā 'alā al-qawm al-kāfirīn</div>
+                <div class="translation">The Messenger has believed in what was revealed to him from his Lord, and [so have] the believers. All of them have believed in Allah and His angels and His books and His messengers, [saying], "We make no distinction between any of His messengers." And they say, "We hear and we obey. [We seek] Your forgiveness, our Lord, and to You is the [final] destination." Allah does not charge a soul except [with that within] its capacity. It will have [the consequence of] what [good] it has gained, and it will bear [the consequence of] what [evil] it has earned. "Our Lord, do not impose blame upon us if we have forgotten or erred. Our Lord, and lay not upon us a burden like that which You laid upon those before us. Our Lord, and burden us not with that which we have no ability to bear. And pardon us; and forgive us; and have mercy upon us. You are our protector, so give us victory over the disbelieving people."</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> Once (especially evening).</div>
+                    <div class="source"><strong>Source:</strong> Ṣaḥīḥ al-Bukhārī (no. 5009), Ṣaḥīḥ Muslim (no. 807).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="1">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 3
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">3</div>
+                <div class="arabic">قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ.</div>
+                <div class="transliteration">Qul huwa Allāhu aḥad, Allāhu aṣ-ṣamad, lam yalid wa lam yūlad, wa lam yakun lahu kufuwan aḥad.</div>
+                <div class="translation">Say, "He is Allah, [who is] One, Allah, the Eternal Refuge. He neither begets nor is born, Nor is there to Him any equivalent."</div>
+                <div class="arabic">قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ. مِن شَرِّ مَا خَلَقَ. وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ. وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ. وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.</div>
+                <div class="transliteration">Qul a'ūdhu birabbi al-falaq, min sharri mā khalaq, wa min sharri ghāsiqin idhā waqab, wa min sharri an-naffāthāti fī al-'uqad, wa min sharri ḥāsidin idhā ḥasad.</div>
+                <div class="translation">Say, "I seek refuge in the Lord of the daybreak, From the evil of that which He created, And from the evil of darkness when it settles, And from the evil of the blowers in knots, And from the evil of an envier when he envies."</div>
+                <div class="arabic">قُلْ أَعُوذُ بِرَبِّ النَّاسِ. مَلِكِ النَّاسِ. إِلَـٰهِ النَّاسِ. مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ. الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ. مِنَ الْجِنَّةِ وَالنَّاسِ.</div>
+                <div class="transliteration">Qul a'ūdhu birabbi an-nās, maliki an-nās, ilāhi an-nās, min sharri al-waswāsi al-khannās, alladhī yuwaswisu fī ṣudūri an-nās, min al-jinnati wa an-nās.</div>
+                <div class="translation">Say, "I seek refuge in the Lord of mankind, The Sovereign of mankind, The God of mankind, From the evil of the retreating whisperer - Who whispers [evil] into the breasts of mankind - From among the jinn and mankind."</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> 3 in morning and 3 in evening.</div>
+                    <div class="source"><strong>Source:</strong> Abū Dāwūd (no. 5082), al-Tirmidhī (no. 3575). Graded ṣaḥīḥ by al-Albānī (Ṣaḥīḥ Abī Dāwūd, 4242).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="3">1</div>
+                        <div class="circle" data-count="3">2</div>
+                        <div class="circle" data-count="3">3</div>
+                    </div>
+                </div>
+            </div>  -->
+
+            <!-- Dhikr 3 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">3</div>
+                
+                <!-- Bismillah before Surah Al-Ikhlas -->
+                <div class="arabic" style="text-align: center; margin-bottom: 0.5rem; color: #2c5e2e;">
+                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                </div>
+                <div class="arabic">قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ.</div>
+                <div class="transliteration">Qul huwa Allāhu aḥad, Allāhu aṣ-ṣamad, lam yalid wa lam yūlad, wa lam yakun lahu kufuwan aḥad.</div>
+                <div class="translation">Say, "He is Allah, [who is] One, Allah, the Eternal Refuge. He neither begets nor is born, Nor is there to Him any equivalent."</div>
+                
+                <!-- Bismillah before Surah Al-Falaq -->
+                <div class="arabic" style="text-align: center; margin: 1.5rem 0 0.5rem 0; color: #2c5e2e;">
+                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                </div>
+                <div class="arabic">قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ. مِن شَرِّ مَا خَلَقَ. وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ. وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ. وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.</div>
+                <div class="transliteration">Qul a'ūdhu birabbi al-falaq, min sharri mā khalaq, wa min sharri ghāsiqin idhā waqab, wa min sharri an-naffāthāti fī al-'uqad, wa min sharri ḥāsidin idhā ḥasad.</div>
+                <div class="translation">Say, "I seek refuge in the Lord of the daybreak, From the evil of that which He created, And from the evil of darkness when it settles, And from the evil of the blowers in knots, And from the evil of an envier when he envies."</div>
+                
+                <!-- Bismillah before Surah An-Nas -->
+                <div class="arabic" style="text-align: center; margin: 1.5rem 0 0.5rem 0; color: #2c5e2e;">
+                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                </div>
+                <div class="arabic">قُلْ أَعُوذُ بِرَبِّ النَّاسِ. مَلِكِ النَّاسِ. إِلَـٰهِ النَّاسِ. مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ. الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ. مِنَ الْجِنَّةِ وَالنَّاسِ.</div>
+                <div class="transliteration">Qul a'ūdhu birabbi an-nās, maliki an-nās, ilāhi an-nās, min sharri al-waswāsi al-khannās, alladhī yuwaswisu fī ṣudūri an-nās, min al-jinnati wa an-nās.</div>
+                <div class="translation">Say, "I seek refuge in the Lord of mankind, The Sovereign of mankind, The God of mankind, From the evil of the retreating whisperer - Who whispers [evil] into the breasts of mankind - From among the jinn and mankind."</div>
+                
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> 3 in morning and 3 in evening.</div>
+                    <div class="source"><strong>Source:</strong> Abū Dāwūd (no. 5082), al-Tirmidhī (no. 3575). Graded ṣaḥīḥ by al-Albānī (Ṣaḥīḥ Abī Dāwūd, 4242).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="3">1</div>
+                        <div class="circle" data-count="3">2</div>
+                        <div class="circle" data-count="3">3</div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Dhikr 4 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">4</div>
+                <div class="arabic">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</div>
+                <div class="transliteration">Allāhumma anta rabbī, lā ilāha illā anta, khalaqtanī wa anā 'abduka, wa anā 'alā 'ahdika wa wa'dika mā astaṭa'tu, a'ūdhu bika min sharri mā ṣana'tu, abū'u laka bi ni'matika 'alayya, wa abū'u laka bidhanbī, faghfir lī fa-innahu lā yaghfiru adh-dhunūba illā anta</div>
+                <div class="translation">O Allah, You are my Lord, none has the right to be worshipped but You. You created me and I am Your servant, and I am faithful to my covenant and my promise as much as I am able. I seek refuge in You from the evil of what I have done. I acknowledge Your favor upon me and I acknowledge my sin, so forgive me, for surely none can forgive sins except You.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> Once.</div>
+                    <div class="source"><strong>Source:</strong> Ṣaḥīḥ al-Bukhārī (no. 6306).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="1">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 5 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">5</div>
+                <div class="arabic">رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا</div>
+                <div class="transliteration">Raḍītu billāhi rabban, wa bil-islāmi dīnan, wa bi-muḥammadin ṣallā Allāhu 'alayhi wa sallama nabiyyan</div>
+                <div class="translation">I am pleased with Allah as my Lord, with Islam as my religion, and with Muhammad (peace and blessings of Allah be upon him) as my Prophet.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> 3 in morning and 3 in evening.</div>
+                    <div class="source"><strong>Source:</strong> Abū Dāwūd (no. 5072), al-Tirmidhī (no. 3389). Graded ḥasan by al-Albānī (Ṣaḥīḥ al-Tirmidhī, 3389).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="3">1</div>
+                        <div class="circle" data-count="3">2</div>
+                        <div class="circle" data-count="3">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 6 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">6</div>
+                <div class="arabic">يَا حَيُّ يَا قَيُّومُ، بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ</div>
+                <div class="transliteration">Yā Ḥayyu yā Qayyūm, bi-raḥmatika astaghīth, aṣliḥ lī sha'nī kullahu, wa lā takilnī ilā nafsī ṭarfata 'ayn</div>
+                <div class="translation">O Ever-Living, O Sustainer, by Your mercy I seek help. Rectify for me all of my affairs and do not leave me to myself, even for the blink of an eye.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> Once.</div>
+                    <div class="source"><strong>Source:</strong> al-Ḥākim (1/545), al-Bayhaqī (3/24). Authenticated by al-Albānī (Ṣaḥīḥ al-Targhīb, 661).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="1">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 7 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">7</div>
+                <div class="arabic">اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ</div>
+                <div class="transliteration">Allāhumma bika aṣbaḥnā, wa bika amsaynā, wa bika naḥyā, wa bika namūtu, wa ilayka an-nushūr</div>
+                <div class="translation">O Allah, by You we enter the morning, by You we enter the evening, by You we live, by You we die, and to You is the resurrection.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> Once.</div>
+                    <div class="source"><strong>Source:</strong> Abū Dāwūd (no. 5068), al-Tirmidhī (no. 3391). Graded ṣaḥīḥ by al-Albānī (Ṣaḥīḥ Abī Dāwūd, 4241).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="1">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 8 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">8</div>
+                <div class="arabic">اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ، اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَهَ إِلَّا أَنْتَ</div>
+                <div class="transliteration">Allāhumma 'āfinī fī badanī, Allāhumma 'āfinī fī sam'ī, Allāhumma 'āfinī fī baṣarī, lā ilāha illā anta. Allāhumma innī a'ūdhu bika min al-kufri wa al-faqri, Allāhumma innī a'ūdhu bika min 'adhābi al-qabri, lā ilāha illā anta</div>
+                <div class="translation">O Allah, grant me health in my body. O Allah, grant me health in my hearing. O Allah, grant me health in my sight. There is no deity worthy of worship except You. O Allah, I seek refuge in You from disbelief and poverty. O Allah, I seek refuge in You from the punishment of the grave. There is no deity worthy of worship except You.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> 3 times.</div>
+                    <div class="source"><strong>Source:</strong> Abū Dāwūd (no. 5090). Authenticated by al-Albānī (Ṣaḥīḥ Abī Dāwūd, 4247).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="3">1</div>
+                        <div class="circle" data-count="3">2</div>
+                        <div class="circle" data-count="3">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 9 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">9</div>
+                <div class="arabic">اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ وَمِنْ خَلْفِي وَعَنْ يَمِينِي وَعَنْ شِمَالِي وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي</div>
+                <div class="transliteration">Allāhumma innī as'aluka al-'afwa wa al-'āfiyah fī ad-dunyā wa al-ākhirah, Allāhumma innī as'aluka al-'afwa wa al-'āfiyah fī dīnī wa dunyāya wa ahlī wa mālī, Allāhumma stura 'awrātī wa āmin raw'ātī, Allāhumma iḥfaẓnī min bayni yadayya wa min khalfī wa 'an yamīnī wa 'an shamālī wa min fawqī, wa a'ūdhu bi-'aẓamatika an ughtāla min taḥtī</div>
+                <div class="translation">O Allah, I ask You for pardon and well-being in this life and the next. O Allah, I ask You for pardon and well-being in my religious and worldly affairs, and my family and my wealth. O Allah, conceal my faults and calm my fears. O Allah, protect me from before me and behind me, from my right and my left, and from above me, and I seek refuge in Your greatness from being taken unaware from beneath me.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> Once.</div>
+                    <div class="source"><strong>Source:</strong> Abū Dāwūd (no. 5074), Ibn Mājah (no. 3871). Authenticated by al-Albānī (Ṣaḥīḥ Abī Dāwūd, 4245).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="1">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 10 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">10</div>
+               <div class="arabic">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ</div>
+                <div class="transliteration">Bismillāhi alladhī lā yaḍurru ma'a ismihi shay'un fī al-arḍi wa lā fī as-samā'i wa huwa as-samī'u al-'alīm</div>
+                <div class="translation">In the name of Allah with Whous name nothing is harmed on earth nor in the heavens and He is the All-Hearing, the All-Knowing.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> 3 in morning and 3 in evening.</div>
+                    <div class="source"><strong>Source:</strong> Abū Dāwūd (no. 5088), al-Tirmidhī (no. 3388), Ibn Mājah (no. 3869). Graded ṣaḥīḥ by al-Albānī (Ṣaḥīḥ Abī Dāwūd, 4249).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="3">1</div>
+                        <div class="circle" data-count="3">2</div>
+                        <div class="circle" data-count="3">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 11 -->
+            <div class="dhikr-card" data-times="morning evening">
+                <div class="dhikr-number">11</div>
+                <div class="arabic">حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ</div>
+                <div class="transliteration">Ḥasbiyallāhu lā ilāha illā huwa, 'alayhi tawakkaltu, wa huwa rabbu al-'arshi al-'aẓīm</div>
+                <div class="translation">Allah is sufficient for me. There is no deity worthy of worship except Him. Upon Him I have relied, and He is the Lord of the Great Throne.</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> 7 times.</div>
+                    <div class="source"><strong>Source:</strong> Abū Dāwūd (no. 5081). Authenticated by al-Albānī (Ṣaḥīḥ Abī Dāwūd, 4240).</div>
+                    <div class="counter-container">
+                        <div class="circle" data-count="7">1</div>
+                        <div class="circle" data-count="7">2</div>
+                        <div class="circle" data-count="7">3</div>
+                        <div class="circle" data-count="7">4</div>
+                        <div class="circle" data-count="7">5</div>
+                        <div class="circle" data-count="7">6</div>
+                        <div class="circle" data-count="7">7</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dhikr 12 -->
+            <div class="dhikr-card" data-times="morning">
+                <div class="dhikr-number">12</div>
+                <div class="arabic">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</div>
+                <div class="transliteration">Subḥānallāhi wa bi-ḥamdih</div>
+                <div class="translation">Glory is to Allah and praise is to Him</div>
+                <div class="details">
+                    <div class="times"><strong>Times:</strong> 100 times (especially morning).</div>
+                    <div class="source"><strong>Source:</strong> Ṣaḥīḥ Muslim (no. 2691).</div>
+                    <div class="counter-container">
+                        <button class="counter-button" id="counter-12">
+                            <i class="fas fa-plus"></i> Count
+                            <span class="counter-display">0</span>
+                        </button>
+                        <button class="reset-button" id="reset-12" title="Reset Counter">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>May Allah accept our prayers and remembrances</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set initial state to night mode
+        document.body.classList.add('dark-mode');
+        
+        // Toggle transliteration
+        const toggleTransliteration = document.getElementById('toggleTransliteration');
+        let transliterationVisible = false;
+        
+        // Initially hide transliteration and translation
+        document.querySelectorAll('.transliteration, .translation').forEach(item => {
+            item.classList.add('hidden');
+        });
+
+        toggleTransliteration.addEventListener('click', function() {
+            const transliterations = document.querySelectorAll('.transliteration');
+            transliterations.forEach(item => {
+                item.classList.toggle('hidden');
+            });
+            transliterationVisible = !transliterationVisible;
+            this.classList.toggle('active');
+        });
+        
+        // Toggle translation
+        const toggleTranslation = document.getElementById('toggleTranslation');
+        let translationVisible = false;
+
+        // Initially hide transliteration and translation
+        document.querySelectorAll('.transliteration, .translation').forEach(item => {
+            item.classList.add('hidden');
+        });
+        
+        toggleTranslation.addEventListener('click', function() {
+            const translations = document.querySelectorAll('.translation');
+            translations.forEach(item => {
+                item.classList.toggle('hidden');
+            });
+            translationVisible = !translationVisible;
+            this.classList.toggle('active');
+        });
+        
+        // Toggle between morning and evening adhkār
+        document.getElementById('showAll').addEventListener('click', function() {
+            filterAdhkār('all');
+            setActiveButton(this);
+        });
+
+        document.getElementById('showMorning').addEventListener('click', function() {
+            filterAdhkār('morning');
+            setActiveButton(this);
+        });
+
+        document.getElementById('showEvening').addEventListener('click', function() {
+            filterAdhkār('evening');
+            setActiveButton(this);
+        });
+
+        function filterAdhkār(time) {
+            const cards = document.querySelectorAll('.dhikr-card');
+            cards.forEach(card => {
+                if (time === 'all' || card.getAttribute('data-times').includes(time)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function setActiveButton(button) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Add active class to clicked button
+            button.classList.add('active');
+        }
+
+        // Dark/Light mode toggle
+        const modeToggle = document.getElementById('modeToggle');
+        let isDarkMode = true;
+        
+        modeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            isDarkMode = !isDarkMode;
+            this.innerHTML = isDarkMode ? 
+                '<i class="fas fa-sun"></i>' : 
+                '<i class="fas fa-moon"></i>';
+        });
+
+        // Circle counting functionality
+        const circles = document.querySelectorAll('.circle');
+        circles.forEach(circle => {
+            circle.addEventListener('click', function() {
+                this.classList.toggle('filled');
+            });
+        });
+
+        // Counter for 100 times dhikr
+        const counterButton = document.getElementById('counter-12');
+        const resetButton = document.getElementById('reset-12');
+        let count = 0;
+        
+        counterButton.addEventListener('click', function() {
+            count++;
+            if (count > 100) count = 100;
+            this.querySelector('.counter-display').textContent = count;
+        });
+        
+        resetButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            count = 0;
+            counterButton.querySelector('.counter-display').textContent = count;
+        });
+    </script>
+</body>
+</html>
