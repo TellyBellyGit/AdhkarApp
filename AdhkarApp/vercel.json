@@ -1,20 +1,18 @@
 {
   "version": 2,
   "name": "islamic-adhkar-ruqyah",
-  "builds": [
-    {
-      "src": "www/**/*",
-      "use": "@vercel/static"
-    }
-  ],
+  "buildCommand": "",
+  "outputDirectory": "www",
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/www/$1"
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
-      "src": "/",
-      "dest": "/www/index.html"
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ],
   "cleanUrls": true,
