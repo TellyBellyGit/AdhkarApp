@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Manzil Verses</title>
+</head>
+<body>
+    <h1>Debug Manzil Verses</h1>
+    <div id="output"></div>
+    
+    <script>
+        // Function to check if manzilVerses.js is loading correctly
+        function checkScript() {
+            const output = document.getElementById('output');
+            
+            // Create a script element
+            const script = document.createElement('script');
+            script.src = 'manzilVerses.js';
+            
+            // Handle load event
+            script.onload = function() {
+                output.innerHTML += '<p style="color: green">Script loaded successfully!</p>';
+                
+                // Check if manzilVerses is defined
+                if (typeof manzilVerses !== 'undefined') {
+                    output.innerHTML += `<p>manzilVerses is defined and contains ${manzilVerses.length} items.</p>`;
+                    output.innerHTML += `<p>First item title: ${manzilVerses[0].title}</p>`;
+                } else {
+                    output.innerHTML += '<p style="color: red">manzilVerses is not defined!</p>';
+                }
+            };
+            
+            // Handle error event
+            script.onerror = function() {
+                output.innerHTML += '<p style="color: red">Error loading script!</p>';
+            };
+            
+            // Append script to document
+            document.body.appendChild(script);
+            output.innerHTML += '<p>Attempting to load manzilVerses.js...</p>';
+        }
+        
+        // Run the check when page loads
+        window.onload = checkScript;
+    </script>
+</body>
+</html>

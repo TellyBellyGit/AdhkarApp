@@ -2,7 +2,7 @@
   "version": 2,
   "name": "islamic-adhkar-ruqyah",
   "buildCommand": "",
-  "outputDirectory": "www",
+  "outputDirectory": "../web-version",
   "routes": [
     {
       "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",

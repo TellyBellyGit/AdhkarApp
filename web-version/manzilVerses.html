@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manzil Verses</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a8c4c;
+            --secondary-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --bg-color: #2d2d2d;
+            --card-bg: #3a3a3a;
+            --border-radius: 10px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        .light-mode {
+            --primary-color: #2c5e2e;
+            --secondary-color: #f8f5e6;
+            --text-color: #333;
+            --bg-color: #fff;
+            --card-bg: #f9f9f9;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+            padding-bottom: 2rem;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 5px solid #d4af37;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .main-controls {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .toggle-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .icon-btn:hover {
+            background-color: #3a6e3c;
+            transform: translateY(-2px);
+        }
+
+        .icon-btn.active {
+            background-color: #d4af37;
+        }
+
+        .manzil-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .manzil-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .manzil-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .manzil-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .manzil-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding-left: 3rem; 
+            color: var(--primary-color);
+        }
+        
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .arabic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: right;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-family: 'Scheherazade New', 'Traditional Arabic', serif;
+        }
+
+        .transliteration {
+            font-style: italic;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .translation {
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .manzil-section {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .arabic {
+                font-size: 1.5rem;
+            }
+            
+            .main-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .toggle-controls {
+                justify-content: center;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Manzil Verses</h1>
+            <p>Collection of Quranic verses for protection and healing</p>
+            <div style="margin-top: 1rem;">
+                <a href="index.html" class="btn" style="background-color: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; color: white; display: inline-block;"><i class="fas fa-home"></i> Return to Menu</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-controls">
+            <div class="toggle-controls">
+                <button class="icon-btn" id="toggleTransliteration" title="Toggle Transliteration">
+                    <i class="fas fa-language"></i>
+                </button>
+                <button class="icon-btn" id="toggleTranslation" title="Toggle Translation">
+                    <i class="fas fa-book"></i>
+                </button>
+                <button class="icon-btn" id="modeToggle" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="manzil-section" id="manzilContainer">
+            <!-- Manzil Verse 1: Al-Fatiha -->
+            <div class="manzil-card">
+                <div class="manzil-number">1</div>
+                <div class="manzil-title">Al-Fatiha (The Opening)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="mb-2 text-green-800 font-semibold">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+                            <div class="transliteration">Bismilla - hir-Rahma nirr Ra heem</div>
+                            <div class="translation">In the name of Allah, the Most Gracious, the Most Merciful</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</span><span class="text-sm text-gray-500 ml-4">﴿١﴾</span></p>
+                            <p class="transliteration">Alhamdu lillahi rabbil alameen</p>
+                            <p class="translation">Praise be to Allah, the Lord of the worlds</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>الرَّحْمَنِ الرَّحِيمِ</span><span class="text-sm text-gray-500 ml-4">﴿٢﴾</span></p>
+                            <p class="transliteration">Ar-Rahman-ir-Raheem</p>
+                            <p class="transliteration">The Most Gracious, the Most Merciful</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>مَالِكِ يَوْمِ الدِّينِ</span><span class="text-sm text-gray-500 ml-4">﴿٣﴾</span></p>
+                            <p class="transliteration">Maliki yawmid-deen</p>
+                            <p class="translation">Master of the Day of Judgment</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</span><span class="text-sm text-gray-500 ml-4">﴿٤﴾</span></p>
+                            <div class="transliteration">Iyyaka na'budu wa iyyaka nasta'een</div>
+                            <div class="translation">You alone we worship, and You alone we ask for help</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</span><span class="text-sm text-gray-500 ml-4">﴿٥﴾</span></p>
+                            <div class="transliteration">Ihdinas-siratal mustaqeem</div>
+                            <div class="translation">Guide us to the straight path</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ</span><span class="text-sm text-gray-500 ml-4">﴿٦﴾</span></p>
+                            <div class="transliteration">Siratal-latheena an'amta alayhim ghayril-maghdubi alayhim wa lad-dalleen</div>
+                            <div class="translation">The path of those upon whom You have bestowed favor, not of those who have earned Your anger, nor of those who are astray</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 2: Al-Baqarah (1 to 5) -->
+            <div class="manzil-card">
+                <div class="manzil-number">2</div>
+                <div class="manzil-title">Al-Baqarah (1 to 5)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="mb-2 text-green-800 font-semibold">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+                            <p class="transliteration">Bismilla - hir-Rahma nirr Ra heem</p>
+                            <p class="translation">In the name of Allah, the Most Gracious, the Most Merciful</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>الم</span><span class="text-sm text-gray-500 ml-4">﴿١﴾</span></p>
+                            <div class="transliteration">Alif Lam Meem</div>
+                            <div class="translation">Alif Lam Meem</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>ذَٰلِكَ الْكِتَابُ لَا رَيْبَ فِيهِ هُدًى لِّلْمُتَّقِينَ</span><span class="text-sm text-gray-500 ml-4">﴿٢﴾</span></p>
+                            <div class="transliteration">Thalikal-kitabu la rayba feehi hudan lil-muttaqeen</div>
+                            <div class="translation">This is the Book about which there is no doubt, a guidance for those conscious of Allah</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ</span><span class="text-sm text-gray-500 ml-4">﴿٣﴾</span></p>
+                            <div class="transliteration">Allazeena yu'minoona bil-ghaybi wa yuqeemoonas-salata wa mimma razaqnahum yunfiqoon</div>
+                            <div class="translation">Who believe in the unseen, establish prayer, and spend out of what We have provided for them</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>وَالَّذِينَ يُؤْمِنُونَ بِمَا أُنزِلَ إِلَيْكَ وَمَا أُنزِلَ مِن قَبْلِكَ وَبِالْآخِرَةِ هُمْ يُوقِنُونَ</span><span class="text-sm text-gray-500 ml-4">﴿٤﴾</span></p>
+                            <div class="transliteration">Wallazeena yu'minoona bima unzila ilayka wa ma unzila min qablika wa bil-akhirati hum yooqinoon</div>
+                            <div class="translation">And who believe in what has been revealed to you, [O Muhammad], and what was revealed before you, and of the Hereafter they are certain [in faith]</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>أُولَٰئِكَ عَلَىٰ هُدًى مِّن رَّبِّهِمْ وَأُولَٰئِكَ هُمُ الْمُفْلِحُونَ</span><span class="text-sm text-gray-500 ml-4">﴿٥﴾</span></p>
+                            <div class="transliteration">Ula-ika 'ala hudam mir-rabbihim wa ula-ika humul-muflihoon</div>
+                            <div class="translation">It is they who are upon guidance from their Lord, and it is they who will be successful</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 6: Ayat Al-Kursi -->
+            <div class="manzil-card">
+                <div class="manzil-number">6</div>
+                <div class="manzil-title">Ayat Al-Kursi (255)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ وَلَا يَئُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ</span><span class="text-sm text-gray-500 ml-4">﴿٢٥٥﴾</span></p>
+                            <div class="transliteration">Allahu la ilaha illa huwa al-hayyul-qayyum, la ta'khuzuhu sinatun wa la nawm, lahu ma fis-samawati wa ma fil-ard, man zal-lazi yashfa'u 'indahu illa bi-iznih, ya'lamu ma bayna aydihim wa ma khalfahum, wa la yuhituna bi shay'in min 'ilmihi illa bima sha', wasi'a kursiyyuhus-samawati wal-ard, wa la ya'uduhu hifzuhuma wa huwal-'aliyyul-'azeem</div>
+                            <div class="translation">Allah - there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is before them and what will be after them, and they encompass not a thing of His knowledge except for what He wills. His Kursi extends over the heavens and the earth, and their preservation tires Him not. And He is the Most High, the Most Great.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 7: Al-Baqarah (256 & 257) -->
+            <div class="manzil-card">
+                <div class="manzil-number">7</div>
+                <div class="manzil-title">Al-Baqarah (256 & 257)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>لَا إِكْرَاهَ فِي الدِّينِ قَد تَّبَيَّنَ الرُّشْدُ مِنَ الْغَيِّ فَمَن يَكْفُرْ بِالطَّاغُوتِ وَيُؤْمِن بِاللَّهِ فَقَدِ اسْتَمْسَكَ بِالْعُرْوَةِ الْوُثْقَىٰ لَا انفِصَامَ لَهَا وَاللَّهُ سَمِيعٌ عَلِيمٌ</span><span class="text-sm text-gray-500 ml-4">﴿٢٥٦﴾</span></p>
+                            <p class="transliteration">La ikraha fid-deeni qad tabayyanar-rushdu minal-ghayy, faman yakfur bit-taghooti wa yu'mim billahi faqad istamsaka bil-'urwatil-wuthqa lanfisama laha, wallahu samee'un 'aleem</p>
+                            <p class="translation">There shall be no compulsion in [acceptance of] the religion. The right course has become clear from the wrong. So whoever disbelieves in Taghut and believes in Allah has grasped the most trustworthy handhold with no break in it. And Allah is Hearing and Knowing.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>اللَّهُ وَلِيُّ الَّذِينَ آمَنُوا يُخْرِجُهُم مِّنَ الظُّلُمَاتِ إِلَى النُّورِ وَالَّذِينَ كَفَرُوا أَوْلِيَاؤُهُمُ الطَّاغُوتُ يُخْرِجُونَهُم مِّنَ النُّورِ إِلَى الظُّلُمَاتِ أُولَٰئِكَ أَصْحَابُ النَّارِ هُمْ فِيهَا خَالِدُونَ</span><span class="text-sm text-gray-500 ml-4">﴿٢٥٧﴾</span></p>
+                            <p class="transliteration">Allahu waliyyul-lazeena amanoo yukhrijuhum minaz-zulumati ilan-noor, wallazeena kafaroo awliya'uhumut-taghootu yukhrijoonahum minan-noori ilaz-zulumat, ula-ika as-habun-nar, hum feeha khalidoon</p>
+                            <p class="translation">Allah is the ally of those who believe. He brings them out from darknesses into the light. And those who disbelieve - their allies are Taghut. They take them out of the light into darknesses. Those are the companions of the Fire; they will abide eternally therein.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 8: Al-Baqarah (284) -->
+            <div class="manzil-card">
+                <div class="manzil-number">8</div>
+                <div class="manzil-title">Al-Baqarah (284)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>لِّلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ وَإِن تُبْدُوا مَا فِي أَنفُسِكُمْ أَوْ تُخْفُوهُ يُحَاسِبْكُم بِهِ اللَّهُ فَيَغْفِرُ لِمَن يَشَاءُ وَيُعَذِّبُ مَن يَشَاءُ وَاللَّهُ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</span><span class="text-sm text-gray-500 ml-4">﴿٢٨٤﴾</span></p>
+                            <p class="transliteration">Lillahi ma fis-samawati wa ma fil-ard, wa in tubdoo ma fee anfusikum aw tukhfoohu yuhasibkum bihillah, fa yaghfiru liman yashaa'u wa yu'adhdhibu man yashaa', wallahu 'ala kulli shay'in qadeer</p>
+                            <p class="translation">To Allah belongs whatever is in the heavens and whatever is on the earth. Whether you show what is within yourselves or conceal it, Allah will bring you to account for it. Then He will forgive whom He wills and punish whom He wills, and Allah is over all things competent.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 9: Al-Baqarah (285) -->
+            <div class="manzil-card">
+                <div class="manzil-number">9</div>
+                <div class="manzil-title">Al-Baqarah (285)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ وَقَالُوا سَمِعْنَا وَأَطَعْنَا غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ</span><span class="text-sm text-gray-500 ml-4">﴿٢٨٥﴾</span></p>
+                            <p class="transliteration">Amanar-rasoolu bima unzila ilayhi mir-rabbihi wal-mu'minoon, kullun amana billahi wa mala'ikatihi wa kutubihi wa rusulih, la nufarriqu bayna ahadim mir-rusulih, wa qaloo sami'na wa ata'na ghufranaka rabbana wa ilaykal-maseer</p>
+                            <p class="translation">The Messenger has believed in what was revealed to him from his Lord, and [so have] the believers. All of them have believed in Allah and His angels and His books and His messengers, [saying], "We make no distinction between any of His messengers." And they say, "We hear and we obey. [We seek] Your forgiveness, our Lord, and to You is the [final] destination."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 10: Al-Baqarah (286) -->
+            <div class="manzil-card">
+                <div class="manzil-number">10</div>
+                <div class="manzil-title">Al-Baqarah (286)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ</span><span class="text-sm text-gray-500 ml-4">﴿٢٨٦﴾</span></p>
+                            <p class="transliteration">La yukallifullahu nafsan illa wus'aha, laha ma kasabat wa 'alayha ma aktasabat, rabbana la tu'akhidhna in naseena aw akhta'na, rabbana wa la tahmil 'alayna isran kama hamaltahu 'alal-lazeena min qablina, rabbana wa la tuhammilna ma la taqata lana bih, wa'fu 'anna waghfir lana warhamna, anta mawlana fansurna 'alal-qawmil-kafireen</p>
+                            <p class="translation">Allah does not charge a soul except [with that within] its capacity. It will have [the consequence of] what [good] it has gained, and it will bear [the consequence of] what [evil] it has earned. "Our Lord, do not impose blame upon us if we have forgotten or erred. Our Lord, and lay not upon us a burden like that which You laid upon those before us. Our Lord, and burden us not with that which we have no ability to bear. And pardon us; and forgive us; and have mercy upon us. You are our protector, so give us victory over the disbelieving people."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 11: Ali Imran (18 - 19) -->
+            <div class="manzil-card">
+                <div class="manzil-number">11</div>
+                <div class="manzil-title">Ali Imran (18 - 19)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>شَهِدَ اللَّهُ أَنَّهُ لَا إِلَٰهَ إِلَّا هُوَ وَالْمَلَائِكَةُ وَأُولُو الْعِلْمِ قَائِمًا بِالْقِسْطِ لَا إِلَٰهَ إِلَّا هُوَ الْعَزِيزُ الْحَكِيمُ</span><span class="text-sm text-gray-500 ml-4">﴿١٨﴾</span></p>
+                            <p class="transliteration">Shahidallahu annahu la ilaha illa huwa wal-mala'ikatu wa ulul-'ilmi qa-imam bil-qist, la ilaha illa huwa al-'azizul-hakeem</p>
+                            <p class="translation">Allah witnesses that there is no deity except Him, and [so do] the angels and those of knowledge - [that He is] maintaining [creation] in justice. There is no deity except Him, the Exalted in Might, the Wise.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>إِنَّ الدِّينَ عِندَ اللَّهِ الْإِسْلَامُ وَمَا اخْتَلَفَ الَّذِينَ أُوتُوا الْكِتَابَ إِلَّا مِن بَعْدِ مَا جَاءَهُمُ الْعِلْمُ بَغْيًا بَيْنَهُمْ وَمَن يَكْفُرْ بِآيَاتِ اللَّهِ فَإِنَّ اللَّهَ سَرِيعُ الْحِسَابِ</span><span class="text-sm text-gray-500 ml-4">﴿١٩﴾</span></p>
+                            <p class="transliteration">Inna ad-deena 'indal-lahil-islam, wa makhtalafal-lazeena ootul-kitaba illa min ba'di ma ja'ahumul-'ilmu baghyam baynahum, wa man yakfur bi-ayatillahi fa-innallaha saree'ul-hisab</p>
+                            <p class="translation">Indeed, the religion in the sight of Allah is Islam. And those who were given the Scripture did not differ except after knowledge had come to them - out of jealous animosity between themselves. And whoever disbelieves in the verses of Allah, then indeed, Allah is swift in [taking] account.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 12: Ali Imran (26 - 27) -->
+            <div class="manzil-card">
+                <div class="manzil-number">12</div>
+                <div class="manzil-title">Ali Imran (26 - 27)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>قُلِ اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَن تَشَاءُ وَتَنزِعُ الْمُلْكَ مِمَّن تَشَاءُ وَتُعِزُّ مَن تَشَاءُ وَتُذِلُّ مَن تَشَاءُ بِيَدِكَ الْخَيْرُ إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</span><span class="text-sm text-gray-500 ml-4">﴿٢٦﴾</span></p>
+                            <p class="transliteration">Qulil-lahumma malikal-mulki tu'til-mulka man tashaa'u wa tanzi'ul-mulka mimman tashaa', wa tu'izzu man tashaa' wa tuzillu man tashaa', biyadikal-khayr, innaka 'ala kulli shay'in qadeer</p>
+                            <p class="translation">Say, "O Allah, Owner of Sovereignty, You give sovereignty to whom You will and You take sovereignty away from whom You will. You honor whom You will and You humble whom You will. In Your hand is [all] good. Indeed, You are over all things competent."</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>تُولِجُ اللَّيْلَ فِي النَّهَارِ وَتُولِجُ النَّهَارَ فِي اللَّيْلِ وَتُخْرِجُ الْحَيَّ مِنَ الْمَيِّتِ وَتُخْرِجُ الْمَيِّتَ مِنَ الْحَيِّ وَتَرْزُقُ مَن تَشَاءُ بِغَيْرِ حِسَابٍ</span><span class="text-sm text-gray-500 ml-4">﴿٢٧﴾</span></p>
+                            <p class="transliteration">Tulijul-layla fin-nahari wa tulijun-nahara fil-layl, wa tukhrijul-hayya minal-mayyiti wa tukhrijul-mayyita minal-hayy, wa tarzuqu man tashaa'u bighayri hisab</p>
+                            <p class="translation">You cause the night to enter the day, and You cause the day to enter the night; and You bring the living out of the dead, and You bring the dead out of the living. And You give provision to whom You will without account.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 14: Al-A'raf (54 - 56) -->
+            <div class="manzil-card">
+                <div class="manzil-number">14</div>
+                <div class="manzil-title">Al-A'raf (54 - 56)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>إِنَّ رَبَّكُمُ اللَّهُ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ فِي سِتَّةِ أَيَّامٍ ثُمَّ اسْتَوَىٰ عَلَى الْعَرْشِ يُغْشِي اللَّيْلَ النَّهَارَ يَطْلُبُهُ حَثِيثًا وَالشَّمْسَ وَالْقَمَرَ وَالنُّجُومَ مُسَخَّرَاتٍ بِأَمْرِهِ أَلَا لَهُ الْخَلْقُ وَالْأَمْرُ تَبَارَكَ اللَّهُ رَبُّ الْعَالَمِينَ</span><span class="text-sm text-gray-500 ml-4">﴿٥٤﴾</span></p>
+                            <p class="transliteration">Inna rabbakumul-lahul-lazi khalaqas-samawati wal-arda fee sittati ayyamin thummas-tawa 'alal-'arsh, yughshil-laylan-nahara yatlubuhu hatheethan wash-shamsa wal-qamara wan-nujoom musakh-kharatim bi-amrih, ala lahul-khalqu wal-amr, tabarakal-lahu rabbul-'alameen</p>
+                            <p class="translation">Indeed, your Lord is Allah, who created the heavens and earth in six days and then established Himself above the Throne. He covers the night with the day, [another night] chasing it rapidly; and [He created] the sun, the moon, and the stars, subjected by His command. Unquestionably, His is the creation and the command; blessed is Allah, Lord of the worlds.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>ادْعُوا رَبَّكُم تَضَرُّعًا وَخُفْيَةً إِنَّهُ لَا يُحِبُّ الْمُعْتَدِينَ</span><span class="text-sm text-gray-500 ml-4">﴿٥٥﴾</span></p>
+                            <p class="transliteration">Ud'oo rabbakum tadarru'an wa khufyah, innahu la yuhibbul-mu'tadeen</p>
+                            <p class="translation">Call upon your Lord in humility and privately; indeed, He does not like transgressors.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>وَلَا تُفْسِدُوا فِي الْأَرْضِ بَعْدَ إِصْلَاحِهَا وَادْعُوهُ خَوْفًا وَطَمَعًا إِنَّ رَحْمَتَ اللَّهِ قَرِيبٌ مِّنَ الْمُحْسِنِينَ</span><span class="text-sm text-gray-500 ml-4">﴿٥٦﴾</span></p>
+                            <p class="transliteration">Wa la tufsidoo fil-ardi ba'da islahiha wad'oohu khawfan wa tama'a, inna rahmatallahi qareebum minal-muhsineen</p>
+                            <p class="translation">And do not cause corruption upon the earth after its reformation. And invoke Him in fear and aspiration. Indeed, the mercy of Allah is near to the doers of good.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 21: Al-Isra (110 - 111) -->
+            <div class="manzil-card">
+                <div class="manzil-number">21</div>
+                <div class="manzil-title">Al-Isra (110 - 111)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>قُلِ ادْعُوا اللَّهَ أَوِ ادْعُوا الرَّحْمَٰنَ أَيًّا مَا تَدْعُوا فَلَهُ الْأَسْمَاءُ الْحُسْنَىٰ وَلَا تَجْهَرْ بِصَلَاتِكَ وَلَا تُخَافِتْ بِهَا وَابْتَغِ بَيْنَ ذَٰلِكَ سَبِيلًا</span><span class="text-sm text-gray-500 ml-4">﴿١١٠﴾</span></p>
+                            <p class="transliteration">Qulid'oo Allaha awid'oor-Rahman, ayyan ma tad'oo falahul-asma'ul-husna, wa la tajhar bi-salataka wa la tukhafit biha wabtaghi bayna thalika sabeela</p>
+                            <p class="translation">Say, "Call upon Allah or call upon the Most Merciful. Whichever [name] you call - to Him belong the best names." And do not recite [too] loudly in your prayer or [too] quietly but seek between that an [intermediate] way.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>وَقُلِ الْحَمْدُ لِلَّهِ الَّذِي لَمْ يَتَّخِذْ وَلَدًا وَلَمْ يَكُن لَّهُ شَرِيكٌ فِي الْمُلْكِ وَلَمْ يَكُن لَّهُ وَلِيٌّ مِّنَ الذُّلِّ وَكَبِّرْهُ تَكْبِيرًا</span><span class="text-sm text-gray-500 ml-4">﴿١١١﴾</span></p>
+                            <p class="transliteration">Wa qulil-hamdu lillahil-lazi lam yattakhiz waladan wa lam yakun lahu shareekun fil-mulki wa lam yakun lahu waliyyum minadh-dhulli wa kabbirhu takbeera</p>
+                            <p class="translation">And say, "Praise to Allah, who has not taken a son and has had no partner in [His] dominion and has no [need of a] protector out of weakness; and glorify Him with [great] glorification."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 22: Al-Mu'minoon (115 - 118) -->
+            <div class="manzil-card">
+                <div class="manzil-number">22</div>
+                <div class="manzil-title">Al-Mu'minoon (115 - 118)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>أَفَحَسِبْتُمْ أَنَّمَا خَلَقْنَاكُمْ عَبَثًا وَأَنَّكُمْ إِلَيْنَا لَا تُرْجَعُونَ</span><span class="text-sm text-gray-500 ml-4">﴿١١٥﴾</span></p>
+                            <div class="transliteration">Afa-hasibtum annama khalaqnakum 'abathan wa-annakum ilayna la turja'un</div>
+                            <div class="translation">Then did you think that We created you uselessly and that to Us you would not be returned?</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>فَتَعَالَى اللَّهُ الْمَلِكُ الْحَقُّ لَا إِلَٰهَ إِلَّا هُوَ رَبُّ الْعَرْشِ الْكَرِيمِ</span><span class="text-sm text-gray-500 ml-4">﴿١١٦﴾</span></p>
+                            <div class="transliteration">Fata'alal-lahul-malikul-haqqu la ilaha illa huwa rabbul-'arshil-karim</div>
+                            <div class="translation">So exalted is Allah, the Sovereign, the Truth; there is no deity except Him, Lord of the Noble Throne.</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>وَمَن يَدْعُ مَعَ اللَّهِ إِلَٰهًا آخَرَ لَا بُرْهَانَ لَهُ بِهِ فَإِنَّمَا حِسَابُهُ عِندَ رَبِّهِ إِنَّهُ لَا يُفْلِحُ الْكَافِرُونَ</span><span class="text-sm text-gray-500 ml-4">﴿١١٧﴾</span></p>
+                            <div class="transliteration">Wa man yad'u ma'allahi ilahan akhara la burhana lahu bihi fa-innama hisabuhu 'inda rabbihi innahu la yuflihu al-kafirun</div>
+                            <div class="translation">And whoever invokes besides Allah another deity for which he has no proof - then his account is only with his Lord. Indeed, the disbelievers will not succeed.</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="flex justify-between mb-2"><span>وَقُل رَّبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ</span><span class="text-sm text-gray-500 ml-4">﴿١١٨﴾</span></p>
+                            <div class="transliteration">Wa qul rabbi-ghfir warham wa-anta khayru ar-rahimin</div>
+                            <div class="translation">And, [O Muhammad], say, "My Lord, forgive and have mercy, and You are the best of the merciful."</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 24: As-Safaat (1 - 11) -->
+            <div class="manzil-card">
+                <div class="manzil-number">24</div>
+                <div class="manzil-title">As-Safaat (1 - 11)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَالصَّافَّاتِ صَفًّا ﴿١﴾ فَالزَّاجِرَاتِ زَجْرًا ﴿٢﴾ فَالتَّالِيَاتِ ذِكْرًا ﴿٣﴾</p>
+                            <div class="transliteration text-center">Was-saffati saffa, faz-zajirati zajra, fat-taliyati dhikra</div>
+                            <div class="translation text-center">By those [angels] lined up in ranks, and those who drive [the clouds], and those who recite the message</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">إِنَّ إِلَٰهَكُمْ لَوَاحِدٌ ﴿٤﴾</p>
+                            <div class="transliteration text-center">Inna ilahakum lawahid</div>
+                            <div class="translation text-center">Indeed, your God is One</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">رَّبُّ السَّمَاوَاتِ وَالْأَرْضِ وَمَا بَيْنَهُمَا وَرَبُّ الْمَشَارِقِ ﴿٥﴾</p>
+                            <div class="transliteration text-center">Rabbu as-samawati wal-ardi wa ma baynahuma wa rabbu al-mashariq</div>
+                            <div class="translation text-center">Lord of the heavens and the earth and that between them and Lord of the sunrises</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">إِنَّا زَيَّنَّا السَّمَاءَ الدُّنْيَا بِزِينَةٍ الْكَوَاكِبِ ﴿٦﴾ وَحِفْظًا مِّن كُلِّ شَيْطَانٍ مَّارِدٍ ﴿٧﴾</p>
+                            <div class="transliteration text-center">Inna zayyanna as-sama'a ad-dunya bi-zinatin al-kawakib, wa hifzam min kulli shaytanin marid</div>
+                            <div class="translation text-center">Indeed, We have adorned the nearest heaven with an adornment of stars and as protection against every rebellious devil</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">لَا يَسَّمَعُونَ إِلَى الْمَلَإِ الْأَعْلَىٰ وَيُقْذَفُونَ مِن كُلِّ جَانِبٍ ﴿٨﴾</p>
+                            <div class="transliteration text-center">La yassami'una ila al-mala'i al-a'la wa yuqdhafuna min kulli janib</div>
+                            <div class="translation text-center">[So] they may not listen to the exalted assembly [of angels] and are pelted from every side</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">دُحُورًا وَلَهُمْ عَذَابٌ وَاصِبٌ ﴿٩﴾ إِلَّا مَن خَطِفَ الْخَطْفَةَ فَأَتْبَعَهُ شِهَابٌ ثَاقِبٌ ﴿١٠﴾</p>
+                            <div class="transliteration text-center">Duhuran wa lahum 'adhabun wasib, illa man khatafa al-khaftata fa atba'ahu shihabun thaqib</div>
+                            <div class="translation text-center">Repelled; and for them is a constant punishment, except one who snatches [some words] by theft, but they are pursued by a burning flame, piercing [in brightness]</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">فَاسْتَفْتِهِمْ أَهُمْ أَشَدُّ خَلْقًا أَم مَّنْ خَلَقْنَا إِنَّا خَلَقْنَاهُم مِّن طِينٍ لَّازِبٍ ﴿١١﴾</p>
+                            <div class="transliteration text-center">Fastaftihim ahum ashaddu khalqan am man khalaqna, inna khalaqnahum min tinin lazin</div>
+                            <div class="translation text-center">Then inquire of them, [O Muhammad], "Are they a stronger [or more difficult] creation or those [others] We have created?" Indeed, We created them from sticky clay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 26: Ar-Rahman (33 - 40) -->
+            <div class="manzil-card">
+                <div class="manzil-number">26</div>
+                <div class="manzil-title">Ar-Rahman (33 - 40)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="text-center mb-2">يَا مَعْشَرَ الْجِنِّ وَالْإِنسِ إِنِ اسْتَطَعْتُمْ أَن تَنفُذُوا مِنْ أَقْطَارِ السَّمَاوَاتِ وَالْأَرْضِ فَانفُذُوا لَا تَنفُذُونَ إِلَّا بِسُلْطَانٍ ﴿٣٣﴾</p>
+                            <div class="transliteration text-center">Ya ma'shar al-jinni wal-ins, ini istata'tum an tanfudhu min aqtar as-samawati wal-ardi fanfudhu, la tanfudhuna illa bi-sultan</div>
+                            <div class="translation text-center">O company of jinn and mankind, if you are able to pass beyond the regions of the heavens and the earth, then pass. You will not pass except by authority [from Allah]</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">يُرْسَلُ عَلَيْكُمَا شُوَاظٌ مِّن نَّارٍ وَنُحَاسٌ فَلَا تَنتَصِرَانِ ﴿٣٤﴾ فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ ﴿٣٥﴾</p>
+                            <div class="transliteration text-center">Yursalu 'alaykuma shuwazun min narin wa nuhasun fa la tantasiran, fa bi-ayyi ala'i rabbikuma tukadhiban</div>
+                            <div class="translation text-center">There will be sent upon you a flame of fire and smoke, and you will not defend yourselves. Then which of the favors of your Lord will you deny?</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">فَإِذَا انشَقَّتِ السَّمَاءُ فَكَانَتْ وَرْدَةً كَالدِّهَانِ ﴿٣٦﴾</p>
+                            <div class="transliteration text-center">Fa idha inshaqqat as-sama'u fa kanat wardatan ka ad-dihan</div>
+                            <div class="translation text-center">And when the heaven is split open and becomes rose-colored like oil</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ ﴿٣٧﴾ فَيَوْمَئِذٍ لَّا يُسْأَلُ عَن ذَنبِهِ إِنسٌ وَلَا جَانٌّ ﴿٣٨﴾</p>
+                            <div class="transliteration text-center">Fa bi-ayyi ala'i rabbikuma tukadhiban, fa yawma'idhin la yus'alu 'an dhanbihi insun wa la jann</div>
+                            <div class="translation text-center">Then which of the favors of your Lord will you deny? So on that Day no man or jinn will be asked about his sin</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ ﴿٣٩﴾</p>
+                            <div class="transliteration text-center">Fa bi-ayyi ala'i rabbikuma tukadhiban</div>
+                            <div class="translation text-center">Then which of the favors of your Lord will you deny?</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">يُعْرَفُ الْمُجْرِمُونَ بِسِيمَاهُمْ فَيُؤْخَذُ بِالنَّوَاصِي وَالْأَقْدَامِ ﴿٤٠﴾</p>
+                            <div class="transliteration text-center">Yu'rafu al-mujrimuna bi-simahum fa yu'khazu bin-nawasi wal-aqdam</div>
+                            <div class="translation text-center">The criminals will be known by their marks, and they will be seized by the forelocks and the feet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 27: Al-Hashr (21 - 24) -->
+            <div class="manzil-card">
+                <div class="manzil-number">27</div>
+                <div class="manzil-title">Al-Hashr (21 - 24)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="text-center mb-2">لَوْ أَنزَلْنَا هَٰذَا الْقُرْآنَ عَلَىٰ جَبَلٍ لَّرَأَيْتَهُ خَاشِعًا مُّتَصَدِّعًا مِّنْ خَشْيَةِ اللَّهِ وَتِلْكَ الْأَمْثَالُ نَضْرِبُهَا لِلنَّاسِ لَعَلَّهُمْ يَتَفَكَّرُونَ ﴿٢١﴾</p>
+                            <div class="transliteration text-center">Law anzalna hatha al-qur'ana 'ala jabalin lara'aytahu khashi'an mutasaddi'an min khashyatillahi wa tilka al-amthalu nadribuha li-nnasi la'allahum yatafakkarun</div>
+                            <div class="translation text-center">If We had sent down this Qur'an upon a mountain, you would have seen it humbled and coming apart from fear of Allah. And these examples We present to the people that perhaps they will give thought.</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ هُوَ الرَّحْمَٰنُ الرَّحِيمُ ﴿٢٢﴾</p>
+                            <div class="transliteration text-center">Huwa Allahu alladhi la ilaha illa huwa 'alim al-ghaybi wash-shahadati huwa ar-Rahman ar-Raheem</div>
+                            <div class="translation text-center">He is Allah, other than whom there is no deity, Knower of the unseen and the witnessed. He is the Entirely Merciful, the Especially Merciful.</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ سُبْحَانَ اللَّهِ عَمَّا يُشْرِكُونَ ﴿٢٣﴾</p>
+                            <div class="transliteration text-center">Huwa Allahu alladhi la ilaha illa huwa al-Malik al-Quddus as-Salam al-Mu'min al-Muhaymin al-'Aziz al-Jabbar al-Mutakabbir, subhan Allahi 'amma yushrikun</div>
+                            <div class="translation text-center">He is Allah, other than whom there is no deity, the Sovereign, the Pure, the Perfection, the Bestower of Faith, the Overseer, the Exalted in Might, the Compeller, the Superior. Exalted is Allah above whatever they associate with Him.</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ لَهُ الْأَسْمَاءُ الْحُسْنَىٰ يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ وَهُوَ الْعَزِيزُ الْحَكِيمُ ﴿٢٤﴾</p>
+                            <div class="transliteration text-center">Huwa Allahu al-Khaliq al-Bari' al-Musawwir, lahu al-asma' al-husna, yusabbihu lahu ma fi as-samawati wal-ard, wa huwa al-'Aziz al-Hakeem</div>
+                            <div class="translation text-center">He is Allah, the Creator, the Inventor, the Fashioner; to Him belong the best names. Whatever is in the heavens and earth is exalting Him. And He is the Exalted in Might, the Wise.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 28: Al-Jinn (1 - 4, 5 - 9) -->
+            <div class="manzil-card">
+                <div class="manzil-number">28</div>
+                <div class="manzil-title">Al-Jinn (1 - 4, 5 - 9)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="text-center mb-2">قُلْ أُوحِيَ إِلَيَّ أَنَّهُ اسْتَمَعَ نَفَرٌ مِّنَ الْجِنِّ فَقَالُوا إِنَّا سَمِعْنَا قُرْآنًا عَجَبًا ﴿١﴾</p>
+                            <p class="transliteration text-center">Qul oohiya ilayya annahu istama'a nafarun min al-jinni faqaloo inna sami'na qur'anan 'ajaba</p>
+                            <p class="translation text-center">Say, [O Muhammad], "It has been revealed to me that a group of the jinn listened and said, 'Indeed, we have heard an amazing Qur'an.'</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">يَهْدِي إِلَى الرُّشْدِ فَآمَنَّا بِهِ وَلَن نُّشْرِكَ بِرَبِّنَا أَحَدًا ﴿٢﴾</p>
+                            <p class="transliteration text-center">Yahdi ila ar-rushdi fa amanna bihi wa lan nushrika birabbina ahadan</p>
+                            <p class="translation text-center">It guides to the right course, and we have believed in it. And we will never associate with our Lord anyone.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَأَنَّهُ تَعَالَىٰ جَدُّ رَبِّنَا مَا اتَّخَذَ صَاحِبَةً وَلَا وَلَدًا ﴿٣﴾ وَأَنَّهُ كَانَ يَقُولُ سَفِيهُنَا عَلَى اللَّهِ شَطَطًا ﴿٤﴾</p>
+                            <p class="transliteration text-center">Wa annahu ta'ala jaddu rabbina ma ittakhatha sahibatan wa la walada, wa annahu kana yaqulu safeehuna 'ala Allahi shatata</p>
+                            <p class="translation text-center">And [we believe] that exalted is the nobleness of our Lord; He has not taken a wife or a son. And that our foolish one has been saying about Allah an excessive transgression.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَأَنَّا ظَنَنَّا أَن لَّن تَقُولَ الْإِنسُ وَالْجِنُّ عَلَى اللَّهِ كَذِبًا ﴿٥﴾</p>
+                            <p class="transliteration text-center">Wa anna thananna an lan taqula al-insu wal-jinnu 'ala Allahi kathiba</p>
+                            <p class="translation text-center">And we had thought that mankind and the jinn would never speak about Allah a lie.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَأَنَّهُ كَانَ رِجَالٌ مِّنَ الْإِنسِ يَعُوذُونَ بِرِجَالٍ مِّنَ الْجِنِّ فَزَادُوهُمْ رَهَقًا ﴿٦﴾</p>
+                            <p class="transliteration text-center">Wa annahu kana rijalun min al-insi ya'oothoona bi-rijalin min al-jinni fa zadoohum rahaqa</p>
+                            <p class="translation text-center">And that there were men from mankind who sought refuge in men from the jinn, so they [only] increased them in burden.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَأَنَّهُمْ ظَنُّوا كَمَا ظَنَنتُمْ أَن لَّن يَبْعَثَ اللَّهُ أَحَدًا ﴿٧﴾</p>
+                            <p class="transliteration text-center">Wa annahum thannu kama thanantum an lan yab'atha Allahu ahadan</p>
+                            <p class="translation text-center">And they had thought, as you thought, that Allah would never send anyone [as a messenger].</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَأَنَّا لَمَسْنَا السَّمَاءَ فَوَجَدْنَاهَا مُلِئَتْ حَرَسًا شَدِيدًا وَشُهُبًا ﴿٨﴾</p>
+                            <p class="transliteration text-center">Wa anna lamasa as-sama'a fa wajadnaha muli'at harasan shadeedan wa shuhuba</p>
+                            <p class="translation text-center">And we have sought [to reach] the heaven but found it filled with powerful guards and burning flames.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَأَنَّا كُنَّا نَقْعُدُ مِنْهَا مَقَاعِدَ لِلسَّمْعِ فَمَن يَسْتَمِعِ الْآنَ يَجِدْ لَهُ شِهَابًا رَّصَدًا ﴿٩﴾</p>
+                            <div class="transliteration text-center">Wa anna kunna naq'udu minha maqa'ida lis-sam'i fa man yastami' al-ana yajid lahu shihaban rasada</div>
+                            <div class="translation text-center">And we used to sit therein in positions for hearing, but whoever listens now will find a burning flame lying in wait for him.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 29: Al-Fil (The Elephant) -->
+            <div class="manzil-card">
+                <div class="manzil-number">29</div>
+                <div class="manzil-title">Al-Fil (The Elephant)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="text-center mb-2">أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ ﴿١﴾</p>
+                            <div class="transliteration text-center">Alam tara kayfa fa'ala rabbuka bi-ashabil-fil</div>
+                            <div class="translation text-center">Have you not considered how your Lord dealt with the companions of the elephant?</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ ﴿٢﴾</p>
+                            <div class="transliteration text-center">Alam yaj'al kaydahum fi tadlil</div>
+                            <div class="translation text-center">Did He not make their plan into misguidance?</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ ﴿٣﴾</p>
+                            <div class="transliteration text-center">Wa arsala 'alayhim tayran ababyl</div>
+                            <div class="translation text-center">And He sent against them birds in flocks</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ ﴿٤﴾</p>
+                            <div class="transliteration text-center">Tarmihim bi-hijaratin min sijjyl</div>
+                            <div class="translation text-center">Striking them with stones of hard clay</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ ﴿٥﴾</p>
+                            <div class="transliteration text-center">Fa-ja'alahum ka-'asfin ma'kul</div>
+                            <div class="translation text-center">And He made them like eaten straw</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 30: Al-Kafiroon (The Disbelievers) -->
+            <div class="manzil-card">
+                <div class="manzil-number">30</div>
+                <div class="manzil-title">Al-Kafiroon (The Disbelievers)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="text-center mb-2">قُلْ يَا أَيُّهَا الْكَافِرُونَ ﴿١﴾</p>
+                            <div class="transliteration text-center">Qul ya ayyuhal-kafirun</div>
+                            <div class="translation text-center">Say: O you disbelievers</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">لَا أَعْبُدُ مَا تَعْبُدُونَ ﴿٢﴾</p>
+                            <div class="transliteration text-center">La a'budu ma ta'budun</div>
+                            <div class="translation text-center">I do not worship what you worship</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٣﴾</p>
+                            <div class="transliteration text-center">Wa la antum 'abiduna ma a'bud</div>
+                            <div class="translation text-center">Nor are you worshippers of what I worship</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ ﴿٤﴾</p>
+                            <div class="transliteration text-center">Wa la ana 'abidun ma 'abadtum</div>
+                            <div class="translation text-center">Nor will I be a worshipper of what you worship</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٥﴾</p>
+                            <div class="transliteration text-center">Wa la antum 'abiduna ma a'bud</div>
+                            <div class="translation text-center">Nor will you be worshippers of what I worship</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">لَكُمْ دِينُكُمْ وَلِيَ دِينِ ﴿٦﴾</p>
+                            <div class="transliteration text-center">Lakum dinukum wa liya din</div>
+                            <div class="translation text-center">For you is your religion, and for me is my religion</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manzil Verse 31: Al-Ikhlas (The Sincerity) -->
+            <div class="manzil-card">
+                <div class="manzil-number">31</div>
+                <div class="manzil-title">Al-Ikhlas (The Sincerity)</div>
+                <div class="arabic">
+                    <div class="arabic-text text-xl sm:text-2xl md:text-3xl space-y-6 text-gray-900">
+                        <div class="mb-6">
+                            <p class="text-center mb-2">قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾</p>
+                            <div class="transliteration text-center">Qul huwa Allahu ahad</div>
+                            <div class="translation text-center">Say: He is Allah, the One</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">اللَّهُ الصَّمَدُ ﴿٢﴾</p>
+                            <div class="transliteration text-center">Allahu as-samad</div>
+                            <div class="translation text-center">Allah, the Eternal Refuge</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾</p>
+                            <div class="transliteration text-center">Lam yalid wa lam yulad</div>
+                            <div class="translation text-center">He neither begets nor is born</div>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-center mb-2">وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾</p>
+                            <div class="transliteration text-center">Wa lam yakun lahu kufuwan ahad</div>
+                            <div class="translation text-center">Nor is there to Him any equivalent</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 | Compiled for spiritual protection and healing</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle transliteration
+        const toggleTransliteration = document.getElementById('toggleTransliteration');
+        let transliterationVisible = false;
+        
+        // Initially hide transliteration and translation
+        document.querySelectorAll('.transliteration, .translation').forEach(item => {
+            item.classList.add('hidden');
+        });
+
+        toggleTransliteration.addEventListener('click', function() {
+            const transliterations = document.querySelectorAll('.transliteration');
+            transliterations.forEach(item => {
+                item.classList.toggle('hidden');
+            });
+            transliterationVisible = !transliterationVisible;
+            this.classList.toggle('active');
+        });
+        
+        // Toggle translation
+        const toggleTranslation = document.getElementById('toggleTranslation');
+        let translationVisible = false;
+        
+        toggleTranslation.addEventListener('click', function() {
+            const translations = document.querySelectorAll('.translation');
+            translations.forEach(item => {
+                item.classList.toggle('hidden');
+            });
+            translationVisible = !translationVisible;
+            this.classList.toggle('active');
+        });
+
+        // Toggle dark/light mode
+        document.getElementById('modeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-mode');
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-sun')) {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        });
+    </script>
+</body>
+</html>
