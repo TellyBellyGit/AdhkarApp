@@ -3,24 +3,24 @@
 
 ## QUICK NAVIGATION
 # Navigate to project folder:
-cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"
+cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\AntiGravity\Adhkarweb"
 
 ## DEVELOPMENT WORKFLOW COMMANDS
 # ===============================
 
 ### 1. COMPLETE UPDATE PROCESS (Copy-Paste Ready)
 # After making edits, run these 3 commands:
-cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"
+cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\AntiGravity\Adhkarweb"
 cordova build android
 & 'C:\Android\platform-tools\adb.exe' install -r 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'
 
 ### 2. ONE-LINE COMPLETE WORKFLOW
 # All steps in one command (PowerShell):
-cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"; cordova build android; & 'C:\Android\platform-tools\adb.exe' install -r 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'
+cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\AntiGravity\Adhkarweb"; cordova build android; & 'C:\Android\platform-tools\adb.exe' install -r 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'
 
 ### 3. INDIVIDUAL COMMANDS
 # Navigate to project:
-cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"
+cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\AntiGravity\Adhkarweb"
 
 # Build APK:
 cordova build android
@@ -71,7 +71,7 @@ platforms/android/      <- Generated Android project (don't edit)
 ## APK LOCATION
 # =============
 Built APK location:
-C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp\platforms\android\app\build\outputs\apk\debug\app-debug.apk
+C:\Users\mabha\Documents\OneDriveMain\OneDrive\AntiGravity\Adhkarweb\platforms\android\app\build\outputs\apk\debug\app-debug.apk
 
 ## DEVELOPMENT TIPS
 # =================
@@ -156,7 +156,7 @@ cordova requirements
 
 ## QUICK COMMANDS CHEAT SHEET (PowerShell)
 # ==========================================
-cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\Ruqyah\Adhkar\AdhkarApp"  # Navigate
+cd "C:\Users\mabha\Documents\OneDriveMain\OneDrive\AntiGravity\Adhkarweb"  # Navigate
 cordova build android                                                        # Build
 & 'C:\Android\platform-tools\adb.exe' install -r 'platforms\android\app\build\outputs\apk\debug\app-debug.apk'  # Install
 & 'C:\Android\platform-tools\adb.exe' devices                              # Check device
