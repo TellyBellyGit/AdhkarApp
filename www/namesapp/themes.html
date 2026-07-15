@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Themes — Names App</title>
+  <link rel="stylesheet" href="themes.css">
+</head>
+<body>
+  <header style="padding:12px; text-align:center;">
+    <h1>Themes</h1>
+    <p style="color:var(--text-dim);">Select a theme to preview (local only)</p>
+  </header>
+
+  <main style="padding:12px">
+    <div id="themes-list">Loading themes…</div>
+  </main>
+
+  <footer style="text-align:center;padding:12px"><a href="index.html">Back</a></footer>
+
+  <script>
+    // Basic themes rendering if themes_data.js defines `themes` array
+    function renderThemes(){
+      const out = document.getElementById('themes-list');
+      out.innerHTML = '';
+      if (window.themes && Array.isArray(window.themes)){
+        window.themes.forEach(t=>{
+          const d = document.createElement('div'); d.className='theme-card';
+          d.innerHTML = `<div class="theme-name">${t.name || 'Unnamed'}</div><div class="theme-desc">${t.desc||''}</div>`;
+          out.appendChild(d);
+        });
+      } else {
+        out.textContent = 'No themes found. Ensure themes_data.js is present in this folder.';
+      }
+    }
+    window.addEventListener('load', function(){
+      // try to load themes_data.js
+      const s = document.createElement('script'); s.src='themes_data.js'; s.onload = renderThemes; s.onerror = renderThemes; document.body.appendChild(s);
+    });
+  </script>
+</body>
+</html>

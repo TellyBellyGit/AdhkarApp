@@ -1,0 +1,317 @@
+jinn's own accountability before Allah<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Al-Asma-ul-Husna Toolkit</title>
+    <meta name="theme-color" content="#1b4d3e">
+    <link rel="stylesheet" href="themes.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <a class="back-btn" href="../index.html">Back</a>
+        <h1>أسماء الله الحسنى</h1>
+    </header>
+
+    <div class="tabs" id="main-tabs">
+        <button class="tab-btn active" onclick="showTab('opening')">Ism Al-A’zam</button>
+        <button class="tab-btn" onclick="showTab('names')">Asma-Ul-Husna</button>
+        <button class="tab-btn" onclick="window.location.href='themes.html'">Themes</button>
+        <button class="tab-btn" onclick="showTab('my-selection')">My Selection</button>
+        <button class="tab-btn" onclick="showTab('times')">Etiquettes</button>
+    </div>
+
+    <main>
+        <section id="opening" class="content-section active">
+            <div class="dua-card">
+                <span class="label">Ism Al-A’zam — Opening</span>
+                <div class="arabic">اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنِّي أَشْهَدُ أَنَّكَ أَنْتَ اللَّهُ لاَ إِلٰهَ إِلَّا أَنْتَ، الْأَحَدُ الصَّمَدُ</div>
+                <div class="transliteration">Allāhumma innī as’aluka bi-anna...</div>
+                <div class="translation">Invoke with sincerity and humility.</div>
+            </div>
+        </section>
+
+        <section id="names" class="content-section">
+            <h2>Names</h2>
+            <div style="display:flex; gap:8px; margin-bottom:12px;">
+                <input id="nameSearch" type="text" placeholder="Search name or meaning..." style="flex:1; padding:8px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text-main);" oninput="filterNames()">
+                <button class="detail-btn" onclick="toggleDataset()">Switch View</button>
+            </div>
+            <div id="names-list" class="names-grid"></div>
+        </section>
+
+        <section id="my-selection" class="content-section">
+            <h2>My Selection</h2>
+            <div id="saved-names-list"></div>
+        </section>
+
+        <section id="times" class="content-section">
+            <h2>Etiquettes of Supplication</h2>
+            <div id="etiquette-list"></div>
+        </section>
+    </main>
+
+    <footer style="text-align:center; padding:20px; color:var(--text-dim);">Local copy — Offline mode</footer>
+</div>
+
+<!-- Load local data and app logic -->
+<script src="names_data.js"></script>
+<script src="themes_data.js"></script>
+<script src="app-offline.js"></script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Al-Asma-ul-Husna Toolkit</title>
+
+    <!-- Mobile / App meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Asma-ul-Husna">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1b4d3e">
+
+    <!-- Local stylesheet (provided in this folder) -->
+    <link rel="stylesheet" href="themes.css">
+</head>
+<body>
+
+<div id="loading-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;"> 
+    <div style="color: var(--primary-gold); font-size:20px;">Loading…</div>
+</div>
+
+<div class="container">
+    <header>
+        <h1>أسماء الله الحسنى</h1>
+        <p style="font-size: 14px; color: var(--text-dim);">The Divine Names & Ism Al-A’zam</p>
+    </header>
+
+    <nav class="tabs" id="main-tabs">
+        <button class="tab-btn active" onclick="showTab('opening')">Ism Al-A’zam</button>
+        <button class="tab-btn" onclick="showTab('names')">Asma-Ul-Husna</button>
+        <button class="tab-btn" onclick="window.location.href='themes.html'">Themes</button>
+        <button class="tab-btn" onclick="showTab('my-selection')">My Selection</button>
+        <button class="tab-btn" onclick="showTab('times')">Etiquettes</button>
+    </nav>
+
+    <main>
+        <section id="opening" class="content-section active">
+            <div class="dua-card">
+                <span class="label">The "Ahad & Samad" Formula</span>
+                <div class="arabic">اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنِّي أَشْهَدُ أَنَّكَ أَنْتَ اللَّهُ لاَ إِلٰهَ إِلَّا أَنْتَ، الْأَحَدُ الصَّمَدُ، الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ، وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ</div>
+                <div class="transliteration">Allāhumma innī as’aluka bi-anna...</div>
+                <div class="translation">"O Allah, I ask You by my testifying that You are Allah..."</div>
+            </div>
+        </section>
+
+        <section id="names" class="content-section">
+            <div class="search-container">
+                <input type="text" id="nameSearch" class="search-input" placeholder="Search name or meaning..." onkeyup="filterNames()">
+                <button class="tab-btn" onclick="toggleDataset()">Switch View</button>
+            </div>
+            <div id="names-list"></div>
+        </section>
+
+        <section id="my-selection" class="content-section">
+            <h2>My Selection</h2>
+            <div id="saved-names-list"><div class="empty-state">No names selected yet.</div></div>
+        </section>
+
+        <section id="times" class="content-section">
+            <h2>Etiquettes</h2>
+            <div id="etiquette-list"></div>
+        </section>
+    </main>
+
+    <footer style="text-align:center; padding:12px; color:var(--text-dim);">
+        <a href="../index.html">Back to App</a>
+    </footer>
+</div>
+
+<!--
+  Local Firebase shim: provides the small set of functions the remote app uses
+  (initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, doc, getDoc, setDoc)
+  Instead of network calls, persistence is backed by localStorage so the app is fully offline.
+-->
+<script type="module">
+    function initializeApp(cfg) { return { _cfg: cfg }; }
+    function getAuth(app) { return { _app: app }; }
+    function signInAnonymously(auth) {
+        const existing = localStorage.getItem('namesapp:userId');
+        if (existing) return Promise.resolve({ uid: existing });
+        const id = 'local_' + Math.random().toString(36).slice(2,10);
+        localStorage.setItem('namesapp:userId', id);
+        return Promise.resolve({ uid: id });
+    }
+    function onAuthStateChanged(auth, cb) {
+        const id = localStorage.getItem('namesapp:userId') || null;
+        setTimeout(() => cb(id ? { uid: id } : null), 0);
+    }
+    function getFirestore(app) { return { _app: app }; }
+    function doc(db, ...parts) { return { _path: parts.join('/') }; }
+    async function getDoc(docRef) {
+        const raw = localStorage.getItem('namesapp:' + docRef._path);
+        return { exists: () => !!raw, data: () => (raw ? JSON.parse(raw) : null) };
+    }
+    async function setDoc(docRef, data) {
+        localStorage.setItem('namesapp:' + docRef._path, JSON.stringify(data));
+        return Promise.resolve();
+    }
+
+    // Expose shims globally for scripts that expect these names
+    window.initializeApp = initializeApp;
+    window.getAuth = getAuth;
+    window.signInAnonymously = signInAnonymously;
+    window.onAuthStateChanged = onAuthStateChanged;
+    window.getFirestore = getFirestore;
+    window.doc = doc;
+    window.getDoc = getDoc;
+    window.setDoc = setDoc;
+
+    // Load local data modules which should be present in this folder (names_data.js, themes_data.js)
+    // Those files define the data arrays and rendering helpers used by the remote app.
+    Promise.all([
+        import('./names_data.js').catch(()=>{console.warn('names_data.js not found or failed to load')}).then(()=>{}),
+        import('./themes_data.js').catch(()=>{console.warn('themes_data.js not found or failed to load')}).then(()=>{})
+    ]).then(()=>{
+        // call the remote initAuth if present
+        if (typeof initAuth === 'function') {
+            try { initAuth(); } catch(e){ console.warn('initAuth failed', e); }
+        }
+        // render names if available
+        if (typeof renderNames === 'function') renderNames();
+        if (typeof renderSelection === 'function') renderSelection();
+        if (typeof renderEtiquettes === 'function') renderEtiquettes && renderEtiquettes();
+    });
+
+    // Basic UI helpers used by the remote script
+    window.showTab = function(id){
+        document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+        const el = document.getElementById(id);
+        if (el) el.classList.add('active');
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        // mark the button
+        document.querySelectorAll('.tab-btn').forEach(b=>{ if (b.textContent.replace(/\s+/g,'').toLowerCase().includes(id.replace('-',''))) b.classList.add('active'); });
+    }
+
+    window.filterNames = function(){ if (typeof filterNames === 'function') filterNames(); }
+    window.toggleDataset = function(){ if (typeof toggleDataset === 'function') toggleDataset(); }
+</script>
+
+</body>
+</html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Names App — Greatest Name Dua</title>
+  <style>
+    :root{font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color:#e6e6e6}
+    body{margin:0;padding:20px;line-height:1.5;background:#121212}
+    header{padding-bottom:10px;border-bottom:1px solid #333; display:flex; flex-direction: column; align-items:center; gap:12px; text-align: center;}
+    h1{font-size:20px;margin:0 0 6px}
+    h2{font-weight:normal; font-style:italic; font-size:13px; color:#bbb; margin:0 0 6px}
+    h3{font-size:16px; margin:12px 0 8px; color:#ddd}
+    .section{margin:16px 0;padding:12px;border:1px solid #333;border-radius:8px;background:#1e1e1e}
+    .arabic{font-size:24px;direction:rtl;text-align:right;font-family: "Scheherazade New", "Noto Naskh Arabic", "Amiri", serif;margin-bottom:8px; background:#232323; padding:10px; border-radius:8px}
+    .translit{font-size:14px;color:#c0c0c0;margin-bottom:6px}
+    .note{font-size:13px;color:#bbb;margin-top:6px}
+    .muted{color:#999;font-size:13px}
+    .small{font-size:13px}
+    .btn{
+        display: inline-block;
+        background-color: #2e8b57;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        margin: 5px;
+        border: none;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #1a472a;
+    }
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        flex-wrap: wrap;
+    }
+    @media print{body{padding:10px} .btn{display:none} }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Greatest Name Dua</h1>
+      <div class="muted small">Recite with certainty and sincerity.</div>
+    </div>
+    <div class="btn-container">
+      <a href="../index.html" class="btn">Home</a>
+    </div>
+  </header>
+
+  <section class="section" id="dua-ism-azam">
+    <h2>1. Dua with the Greatest Name (Ismullahi Al-A'zam)</h2>
+    
+    <div class="arabic" dir="rtl">اللَّهُمَّ إِنِّي أَسْأَلُكَ بِأَنِّي أَشْهَدُ أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلَّا أَنْتَ الْأَحَدُ الصَّمَدُ الَّذِي لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ</div>
+    
+    <h3>Transliteration</h3>
+    <div class="translit">Allahumma innee as'aluka bi-annee ash-hadu annaka Anta Allah, la ilaha illa Ant, Al-Ahad As-Samad, al-ladhi lam yalid wa lam yulad, wa lam yakun lahu kufuwan ahad.</div>
+    
+    <h3>Meaning</h3>
+    <div class="note">"O Allah, indeed I ask You by the fact that I bear witness that You are Allah, there is no deity except You, The One, The Eternal (Self-Sufficient Master), Who does not beget and was not born, and there is not for Him any equivalent."</div>
+  </section>
+
+  <section class="section" id="dua-targeted">
+    <h2>2. The Targeted Dua Against Magicians</h2>
+    <div class="muted small">Read 3 times</div>
+
+    <div class="arabic" dir="rtl">اللَّهُمَّ أَبْطِلْ سِحْرَهُمْ كُلَّهُ، 
+وَاقْطَعْ أَسْبَابَهُمْ جَمِيعًا، 
+وَفَرِّقْ جَمِيعَهُمْ، 
+وَشَتِّتْ شَمْلَهُمْ، 
+وَاقْهَرْ شَيَاطِينَهُمْ، 
+وَارْدُدْ كُلَّ بَأْسٍ وَمَكْرٍ وَسِحْرٍ يَصْنَعُونَهُ إِلَيْهِمْ، 
+يَا قَوِيُّ يَا مَتِينُ.</div>
+
+    <h3>Transliteration</h3>
+    <div class="translit">Allahumma abtil sihrahum kullahu, waqta‘ asbabahum jamee‘an, wa farrik jam‘ahum, wa shattit shamlahum, wa aqhir shayateenahum, wardud kulla ba’sin wa makrin wa sihrin yasna‘oonahu ilayhim, ya Qawiyyu ya Matīn.</div>
+    <div class="note">“O Allah, nullify all of their sihr, cut all their connections, break their unity, scatter them, overpower their devils, and return every harm, plot and sihr they make back upon them — O Mighty, O Firm in Strength.”</div>
+  </section>
+
+  <section class="section" id="final-strike">
+    <h2>3. Repeat the final strike (7x)</h2>
+    <div class="arabic" dir="rtl">اللَّهُمَّ وَارْدُدْ كُلَّ بَأْسٍ وَمَكْرٍ وَسِحْرٍ يَصْنَعُونَهُ إِلَيْهِمْ</div>
+    <div class="note">Trans: “Ya Allah Return every harm, plot and sihr they produce back upon them.”</div>
+  </section>
+
+  <section class="section" id="reliance">
+    <h2>4. Reliance on Allah</h2>
+    <div class="arabic" dir="rtl">حَسْبِيَ اللَّهُ وَنِعْمَ الْوَكِيلُ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ</div>
+    <div class="translit">Hasbunallahu wa ni'mal wakeel, wa la hawla wa la quwwata illa billahil 'aliyyil 'adheem.</div>
+    <div class="note">"Allah is sufficient for us, and He is the best Disposer of affairs. And there is no power nor might except with Allah, the Most High, the Most Great."</div>
+  </section>
+
+  <section class="section" id="close">
+    <h2>Close with</h2>
+    <div class="arabic" dir="rtl">اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَأَصْحَابِهِ أَجْمَعِينَ.</div>
+    <div class="translit small">(Allahumma salli wa sallim 'ala nabiyyina Muhammadin wa 'ala alihi wa as-habihi ajma'in.)</div>
+  </section>
+
+  <footer style="margin-top:16px;color:#666;font-size:13px">Printed guidance — use with sincerity.</footer>
+
+</body>
+</html>

@@ -388,7 +388,8 @@
     <header>
         <div class="header-pattern"></div>
         <h1>Islamic Adhkar & Ruqyah</h1>
-        <p>Collection of beneficial supplications and verses for spiritual protection and healing</p>
+            <p>Collection of beneficial supplications and verses for spiritual protection and healing</p>
+        <p style="margin-top:6px; font-size:0.85rem; opacity:0.85;">Version: 1.0.1</p>
     </header>
 
     <div class="app-container">
@@ -629,6 +630,54 @@
         });
     </script>
 </body>
+<!-- Ism-Ul-Husna confirmation modal (opens external site) -->
+<div id="ismModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000;">
+    <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); background:#fff; color:#222; width:min(90vw, 420px); border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.25);">
+        <div style="padding:20px;">
+            <p style="margin-bottom:18px; font-size:16px; line-height:1.4; color:#333;">This will open the Names app on the web. Continue to the external site?</p>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button onclick="closeIsmModal()" style="padding:10px 16px; border:1px solid #bbb; background:#f7f7f7; color:#333; border-radius:8px; cursor:pointer; font-weight:500;">Cancel</button>
+                <button id="ismOkBtn" style="padding:10px 16px; border:1px solid #1e7e34; background:#28a745; color:#fff; border-radius:8px; cursor:pointer; font-weight:500;">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmIsmUlHusna() {
+        document.getElementById('ismModal').style.display = 'block';
+        const ok = document.getElementById('ismOkBtn');
+        // remove any previous listeners by replacing node
+        ok.replaceWith(ok.cloneNode(true));
+        const newOk = document.getElementById('ismOkBtn');
+        newOk.addEventListener('click', function(){
+            openExternalSite('https://namesapp.netlify.app');
+            closeIsmModal();
+        });
+    }
+
+    function closeIsmModal() { const el = document.getElementById('ismModal'); if (el) el.style.display = 'none'; }
+
+    function openExternalSite(url) {
+        // Prefer Cordova InAppBrowser '_system' target if available, else fallback to window.open
+        try {
+            if (window.cordova && cordova.InAppBrowser && typeof cordova.InAppBrowser.open === 'function') {
+                cordova.InAppBrowser.open(url, '_system');
+                return;
+            }
+        } catch(e) { /* ignore and fallback */ }
+
+        // Try window.open with _system (works if InAppBrowser replaces window.open)
+        try {
+            const win = window.open(url, '_system');
+            if (win) return;
+        } catch(e) { /* ignore */ }
+
+        // Final fallback: open in same window
+        window.location.href = url;
+    }
+</script>
+
 <div id="devAccessModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000;">
   <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); background:#fff; color:#222; width:min(90vw, 400px); border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.25);">
     <div style="padding:16px 20px; border-bottom:1px solid #eee; font-weight:600; font-size:18px;">Under Construction: Dev Access Only</div>
@@ -644,28 +693,8 @@
   </div>
 </div>
 
-<div id="ismModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:1000;">
-  <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); background:#fff; color:#222; width:min(90vw, 400px); border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.25);">
-    <div style="padding:24px 20px;">
-      <p style="margin-bottom:24px; font-size:16px; line-height:1.5; color:#333;">This will take you another dedicated Allah's (swt) Names</p>
-      <div style="display:flex; gap:10px; justify-content:flex-end;">
-        <button onclick="closeIsmModal()" style="padding:10px 16px; border:1px solid #bbb; background:#f7f7f7; color:#333; border-radius:8px; cursor:pointer; font-weight:500;">Cancel</button>
-        <button onclick="window.location.href='https://namesapp.netlify.app'" style="padding:10px 16px; border:1px solid #1e7e34; background:#28a745; color:#fff; border-radius:8px; cursor:pointer; font-weight:500;">OK</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-  function confirmIsmUlHusna() {
-    document.getElementById('ismModal').style.display = 'block';
-  }
-
-  function closeIsmModal() {
-    document.getElementById('ismModal').style.display = 'none';
-  }
-
-  function openDevAccess() {
+    function openDevAccess() {
     const modal = document.getElementById('devAccessModal');
     const input = document.getElementById('devAccessInput');
     const error = document.getElementById('devAccessError');

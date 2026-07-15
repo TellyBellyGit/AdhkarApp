@@ -58,6 +58,13 @@
         .section-heading { font-size: 1.2rem; font-weight: 700; margin: 1.2rem 0; opacity: 0.92; text-align:center; position:relative; }
         .section-heading::after { content:''; display:block; width:80px; height:2px; background: rgba(255,255,255,0.18); margin:0.35rem auto 0; border-radius:2px; }
 
+        /* Advice/info card */
+        .advice-card { background: linear-gradient(135deg, #1a2e1f, #1f2a20); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
+        .advice-card h3 { color: #d4af37; margin-bottom: 1rem; font-size: 1.1rem; }
+        .advice-card p { color: #c3cad3; font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.6rem; }
+        .advice-card p:last-child { margin-bottom: 0; }
+        .advice-card .advice-separator { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 1rem 0; }
+
         /* Cards */
         .dhikr-card { background-color: #1f2329; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); transition: var(--transition); position: relative; }
         .dhikr-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45); }
@@ -125,6 +132,21 @@
             <h2 id="targeted-title" class="section-heading">Targeted Verses</h2>
             <div id="targeted-controls" class="controls-card" aria-label="Targeted categories"></div>
             <div id="targeted-verses" class="dhikr-container"></div>
+        </section>
+
+        <!-- Sustained Practice Notes -->
+        <section id="sustained-practice-section">
+            <h2 class="section-heading">Sustained Practice Notes</h2>
+            <div class="controls-card"><button id="advice-toggle-btn" class="pill-btn" type="button">Advice</button></div>
+            <div id="advice-content" class="advice-card" style="display:none;">
+                <h3>Sustained Closing</h3>
+                <p>Daily Manzil + Ikhlas/Falaq/Nas morning/evening + Ayat al-Kursi after each prayer, 3-day floor to 40-day horizon.</p>
+                <hr class="advice-separator">
+                <h3>Continued Mujahada</h3>
+                <p>At each pull-moment + reflection tied specifically to the identified opening, not generic worship increase.</p>
+                <hr class="advice-separator">
+                <p>This is where yaqeen either settles (istiqrar) or doesn't — duration exists to let internal and external work catch up to each other, not as a fixed countdown.</p>
+            </div>
         </section>
 
         <!-- Closing -->
@@ -562,12 +584,12 @@
                     const addition = {
                         category: "jinn_confrontation",
                         surah: "Al-Ahqaf",
-                        verse: "29-32",
+                        verse: "29-32 (jinn's own accountability before Allah swt)",
                         arabic: "وَإِذْ صَرَفْنَا إِلَيْكَ نَفَرًا مِّنَ الْجِنِّ يَسْتَمِعُونَ الْقُرْآنَ فَلَمَّا حَضَرُوهُ قَالُوا أَنصِتُوا ۖ فَلَمَّا قُضِيَ وَلَّوْا إِلَىٰ قَوْمِهِم مُّنذِرِينَ قَالُوا يَا قَوْمَنَا إِنَّا سَمِعْنَا كِتَابًا أُنزِلَ مِن بَعْدِ مُوسَىٰ مُصَدِّقًا لِّمَا بَيْنَ يَدَيْهِ يَهْدِي إِلَى الْحَقِّ وَإِلَىٰ طَرِيقٍ مُّسْتَقِيمٍ يَا قَوْمَنَا أَجِيبُوا دَاعِيَ اللَّهِ وَآمِنُوا بِهِ يَغْفِرْ لَكُم مِّن ذُنُوبِكُمْ وَيُجِرْكُم مِّنْ عَذَابٍ أَلِيمٍ",
                         displayArabic: "وَإِذْ صَرَفْنَا إِلَيْكَ نَفَرًا مِّنَ الْجِنِّ يَسْتَمِعُونَ الْقُرْآنَ فَلَمَّا حَضَرُوهُ قَالُوا أَنصِتُوا ۖ فَلَمَّا قُضِيَ وَلَّوْا إِلَىٰ قَوْمِهِم مُّنذِرِينَ ۝٢٩ قَالُوا يَا قَوْمَنَا إِنَّا سَمِعْنَا كِتَابًا أُنزِلَ مِن بَعْدِ مُوسَىٰ مُصَدِّقًا لِّمَا بَيْنَ يَدَيْهِ يَهْدِي إِلَى الْحَقِّ وَإِلَىٰ طَرِيقٍ مُّسْتَقِيمٍ ۝٣٠ يَا قَوْمَنَا أَجِيبُوا دَاعِيَ اللَّهِ وَآمِنُوا بِهِ يَغْفِرْ لَكُم مِّن ذُنُوبِكُمْ وَيُجِرْكُم مِّنْ عَذَابٍ أَلِيمٍ ۝٣١",
                         translation: "And mention when We directed to you a few of the jinn, listening to the Qur'an. And when they attended it, they said, 'Listen quietly.' And when it was concluded, they went back to their people as warners. They said, 'O our people, indeed, we have heard a book revealed after Moses confirming what was before it which guides to the truth and to a straight path. O our people, respond to the Messenger of Allah and believe in him; Allah will forgive for you your sins and protect you from a painful punishment.'"
                     };
-                    d.targetedVerses.sihr.push(addition);
+                    d.targetedVerses.sihr.splice(7, 0, addition);
                 })(data);
 
                 // Evil eye dua is now stored in data/verses.json; no runtime injection needed
@@ -594,6 +616,18 @@
 
         // Initialize
         initVersesUI();
+
+        // Advice toggle
+        (function setupAdviceToggle() {
+            const btn = document.getElementById('advice-toggle-btn');
+            const container = document.getElementById('advice-content');
+            let shown = false;
+            btn.addEventListener('click', () => {
+                shown = !shown;
+                btn.textContent = shown ? 'Hide Advice' : 'Advice';
+                container.style.display = shown ? '' : 'none';
+            });
+        })();
 
         function getCoreAudioList() {
             return Array.from(document.querySelectorAll('#core-verses audio'));

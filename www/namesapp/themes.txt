@@ -1,0 +1,124 @@
+const divineThemes = {
+    // MAIN THEMATIC GROUPS (Based on Al-Ghazali & Ibn Al-Qayyim)
+    themes: {
+        majesty: {
+            name: "Names of Majesty (Jalaliyyah)",
+            description: "Inspire awe, reverence, and consciousness of Allah's greatness and power. Cultivate fear (khawf) and reverence.",
+            names: [3, 4, 5, 6, 7, 8, 9, 10, 15, 22, 25, 28, 33, 37, 41, 48, 61, 65, 78, 81, 84, 85]
+        },
+        beauty: {
+            name: "Names of Beauty (Jamaliyyah)",
+            description: "Inspire love, hope, and intimacy with Allah. Cultivate hope (raja') and love.",
+            names: [1, 2, 14, 30, 32, 34, 35, 42, 47, 56, 79, 80, 82, 83]
+        },
+        creation: {
+            name: "Names of Creation & Sustenance",
+            description: "Reveal Allah as the Originator, Sustainer, and Controller of all existence.",
+            names: [11, 12, 13, 16, 17, 20, 21, 39, 49, 58, 59, 60, 61, 88, 89, 90, 91, 92, 95, 96, 97]
+        },
+        knowledge: {
+            name: "Names of Knowledge & Wisdom",
+            description: "Manifest Allah's perfect knowledge, awareness, and wise decree.",
+            names: [19, 27, 28, 29, 31, 43, 44, 46, 50, 51, 57, 64, 75, 76, 86, 94, 98]
+        },
+        power: {
+            name: "Names of Power & Strength",
+            description: "Demonstrate Allah's absolute capability, strength, and firm control.",
+            names: [8, 9, 15, 53, 54, 69, 70, 81]
+        },
+        unity: {
+            name: "Names of Divine Unity (Tawheed)",
+            description: "Affirm Allah's absolute oneness, uniqueness, and self-sufficiency.",
+            names: [66, 67, 68, 88]
+        },
+        timeSpace: {
+            name: "Names of Time & Space",
+            description: "Transcend temporal and spatial limitations - First, Last, Manifest, Hidden.",
+            names: [71, 72, 73, 74, 75, 76, 96, 97]
+        }
+    },
+
+    // COMPLEMENTARY PAIRS (Based on Ibn Al-Qayyim's method)
+    complementaryPairs: [
+        { pair: ["Al-Qabid", "Al-Basit"], ids: [20, 21], theme: "Control" },
+        { pair: ["Al-Khafid", "Ar-Rafi'"], ids: [22, 23], theme: "Status" },
+        { pair: ["Al-Mu'izz", "Al-Mudhill"], ids: [24, 25], theme: "Honor" },
+        { pair: ["Al-Muqaddim", "Al-Mu'akhkhir"], ids: [71, 72], theme: "Time" },
+        { pair: ["Ad-Darr", "An-Nafi'"], ids: [91, 92], theme: "Harm/Benefit" },
+        { pair: ["Al-Ghaffar", "Al-Ghafur", "Al-Afuww"], ids: [14, 34, 82], theme: "Forgiveness Spectrum" },
+        { pair: ["Ar-Rahman", "Ar-Raheem"], ids: [1, 2], theme: "Mercy" },
+        { pair: ["Al-Hayy", "Al-Qayyum"], ids: [62, 63], theme: "Life & Sustenance" }
+    ],
+
+    // QUR'ANIC GROUPINGS (How Allah pairs Names in the Qur'an)
+    quranicPairs: [
+        { verse: "Surah Al-Hashr: 24", pairs: ["Al-Khaliq", "Al-Bari'", "Al-Musawwir"], ids: [11, 12, 13] },
+        { verse: "Surah Al-Isra: 110", pairs: ["Ar-Rahman", "Ar-Raheem"], ids: [1, 2] },
+        { verse: "Surah Al-Hadid: 1-3", pairs: ["Al-Awwal", "Al-Akhir", "Az-Zahir", "Al-Batin"], ids: [73, 74, 75, 76] },
+        { verse: "Surah Al-Hashr: 23", pairs: ["Al-Malik", "Al-Quddus", "As-Salam"], ids: [3, 4, 5] }
+    ],
+
+    // SITUATIONAL GUIDANCE (Practical application based on need)
+    situationalGuide: {
+        forgiveness: {
+            situation: "After sinning/Seeking forgiveness",
+            names: [14, 34, 80, 82, 83], // Ghaffar, Ghafur, Tawwab, Afuww, Ra'uf
+            duaLanguage: "Focus on Allah's boundless mercy and willingness to erase sins completely.",
+            scholarlyNote: "Ibn Al-Qayyim: 'Call upon Allah with His Names of forgiveness in humility and hope.'"
+        },
+        provision: {
+            situation: "Financial difficulty/Need for sustenance",
+            names: [16, 17, 39, 42, 88, 89], // Wahhab, Razzaq, Muqit, Karim, Ghaniyy, Mughni
+            duaLanguage: "Emphasize His generosity and your dependence on Him as the True Provider.",
+            scholarlyNote: "Al-Ghazali: 'Seek from Al-Ghaniyy (The Rich) while acknowledging your poverty before Him.'"
+        },
+        oppression: {
+            situation: "Being wronged/Oppressed",
+            names: [25, 28, 29, 86], // Mudhill, Hakam, Adl, Muqsit
+            duaLanguage: "Appeal to His perfect justice without seeking personal vengeance.",
+            scholarlyNote: "Ibn Taymiyyah: 'Trust in Al-Adl while embodying patience (As-Sabur).'"
+        },
+        guidance: {
+            situation: "Confusion/Need for direction",
+            names: [18, 46, 94, 98], // Fattah, Hakim, Hadi, Rashid
+            duaLanguage: "Ask for opening of clarity and wisdom in decisions.",
+            scholarlyNote: "Ibn Al-Qayyim: 'Combine Al-Hadi (Guide) with Ar-Rashid (Right Guide) for true direction.'"
+        },
+        fearAnxiety: {
+            situation: "Fear/Anxiety/Uncertainty",
+            names: [5, 6, 7, 52, 55], // Salam, Mu'min, Muhaymin, Wakil, Waliyy
+            duaLanguage: "Seek peace and protection through trust in His guardianship.",
+            scholarlyNote: "The Prophet ﷺ would say in fear: 'Hasbiyallahu la ilaha illa huwa, alayhi tawakkaltu...'"
+        },
+        health: {
+            situation: "Illness/Health concerns",
+            names: [12, 60, 62], // Bari', Muhyi, Hayy
+            duaLanguage: "Ask the Giver of Life for healing and restoration.",
+            scholarlyNote: "Scholars recommend: 'Ya Hayyu ya Qayyum, bi-rahmatika astaghith...'"
+        }
+    },
+
+    
+
+    // SCHOLARLY PRACTICES
+    practices: [
+        {
+            name: "Weekly Thematic Focus",
+            description: "Focus on one theme per week for deep reflection",
+            method: "Choose 1-2 Names from a theme daily, reflect on meanings, and embody attributes",
+            source: "Based on Al-Ghazali's method of takhalluq (embodying attributes)"
+        },
+        {
+            name: "Complementary Pair Du'a",
+            description: "Use complementary pairs in supplication",
+            method: "When asking for something, use both Names (e.g., 'Ya Razzaq, Ya Wahhab' for provision)",
+            source: "Ibn Al-Qayyim's observation of Qur'anic pairings"
+        },
+        {
+            name: "Balanced Recitation",
+            description: "Balance between Majesty and Beauty Names",
+            method: "Recite equal numbers from Jalaliyyah and Jamaliyyah groups",
+            source: "Scholarly emphasis on balanced heart between khawf and raja'"
+        }
+    ]
+};
