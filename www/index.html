@@ -523,12 +523,12 @@
                     <div class="menu-title">Ism-Ul-Husna</div>
                 </div>
                 
-                <!-- Editor launcher -->
-                <div class="menu-item" onclick="window.location.href='editor.html'">
+                <!-- Notes (triple-tap for access) -->
+                <div class="menu-item" onclick="openNotes()">
                     <div class="menu-icon">
-                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-note-sticky"></i>
                     </div>
-                    <div class="menu-title">Open Editor</div>
+                    <div class="menu-title">Notes</div>
                 </div>
             </div>
         </div>
@@ -543,7 +543,7 @@
 
     <footer id="infoFooter">
         <p>Compiled for spiritual protection and healing</p>
-        <p>Site: adhkarweb.netlify.app | Github: <a href="https://github.com/TellyBellyGit/Adhkarweb.git" target="_blank">Adhkarweb</a></p>
+        <p>Site: adhkarweb.netlify.app | Github: <a href="https://github.com/TellyBellyGit/Adhkarapp.git" target="_blank">Adhkarapp</a></p>
     </footer>
 
     <script>
@@ -694,6 +694,38 @@
 </div>
 
 <script>
+    // Notes button: single tap shows "No notes", triple-tap opens advisory content
+    let notesTapCount = 0;
+    let notesTapTimer = null;
+    const NOTES_TAP_WINDOW_MS = 800;
+
+    function openNotes() {
+      notesTapCount += 1;
+      if (notesTapCount === 1) {
+        notesTapTimer = setTimeout(() => {
+          if (notesTapCount < 3) {
+            // Show "No notes" toast
+            let toast = document.getElementById('notesToast');
+            if (!toast) {
+              toast = document.createElement('div');
+              toast.id = 'notesToast';
+              toast.style.cssText = 'position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.85); color:#fff; padding:12px 24px; border-radius:8px; font-size:15px; z-index:2000; pointer-events:none; transition:opacity 0.3s;';
+              document.body.appendChild(toast);
+            }
+            toast.textContent = 'No notes';
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 1500);
+          }
+          notesTapCount = 0;
+          notesTapTimer = null;
+        }, NOTES_TAP_WINDOW_MS);
+      } else if (notesTapCount === 3) {
+        clearTimeout(notesTapTimer);
+        notesTapCount = 0;
+        window.location.href = 'notes.html';
+      }
+    }
+
     function openDevAccess() {
     const modal = document.getElementById('devAccessModal');
     const input = document.getElementById('devAccessInput');
