@@ -3,82 +3,484 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes</title>
+    <title>Notes — Ruqyah Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #ffffff;
-            --text: #1a1a1a;
-            --link: #2c5e2e;
+            --primary-color: #1a5e1a;
+            --secondary-color: #2d8b2d;
+            --light-color: #f5f9f5;
+            --accent-color: #b38a4c;
+            --warning-color: #8b4513;
         }
-        .dark-mode {
-            --bg: #1a1a1a;
-            --text: #f0f0f0;
-            --link: #5da360;
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            background-color: #f9f9f9;
+            color: #333;
             line-height: 1.7;
-            padding: 20px;
-            max-width: 700px;
-            margin: 0 auto;
-            transition: background 0.3s, color 0.3s;
         }
-        h1 { color: var(--link); margin-bottom: 24px; font-size: 1.4rem; }
-        p { margin-bottom: 16px; }
-        .back-link { display: inline-block; margin-top: 24px; color: var(--link); text-decoration: none; font-size: 0.9rem; }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .header-controls {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .header-btn {
+            background-color: rgba(255,255,255,0.2);
+            color: #fff;
+            border: none;
+            padding: 0.6rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.2rem 0 0.5rem 0;
+        }
+
+        h4 {
+            color: var(--warning-color);
+            margin: 1rem 0 0.4rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Collapsible details/summary */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details > summary h2 {
+            display: inline;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+        details > summary h2::after {
+            content: " ▾";
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+        details[open] > summary h2::after {
+            content: " ▴";
+        }
+
+        /* Table of Contents */
+        .toc-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.35rem;
+        }
+
+        .toc-list a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc-list a:hover {
+            text-decoration: underline;
+        }
+
+        .toc-list .toc-sub {
+            padding-left: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .toc-list .toc-sub a {
+            font-weight: 400;
+        }
+
+        /* Symptom table */
+        .symptom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.92rem;
+        }
+
+        .symptom-table th,
+        .symptom-table td {
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .symptom-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .symptom-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Guidance block */
+        .guidance-block {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 6px;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .guidance-block p {
+            margin-bottom: 0.5rem;
+        }
+
+        .guidance-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .guidance-block strong {
+            color: var(--primary-color);
+        }
+
+        /* Spaced paragraph */
+        .spaced {
+            margin-bottom: 1.25rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Dark mode */
+        body[data-theme="dark"] {
+            background-color: #1a1a1a;
+            color: #eaeaea;
+        }
+
+        body[data-theme="dark"] .section {
+            background-color: #2a2a2a;
+            box-shadow: none;
+        }
+
+        body[data-theme="dark"] .symptom-table tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+
+        body[data-theme="dark"] .symptom-table th {
+            background-color: #1a3d1a;
+        }
+
+        body[data-theme="dark"] .symptom-table td {
+            border-color: #444;
+        }
+
+        body[data-theme="dark"] .symptom-table th {
+            border-color: #444;
+        }
+
+        body[data-theme="dark"] .guidance-block {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        body[data-theme="dark"] h2 {
+            border-bottom-color: #444;
+        }
+
+        body[data-theme="dark"] footer {
+            color: #bdbdbd;
+        }
+
+        body[data-theme="dark"] .toc-list a {
+            color: #5da360;
+        }
+
+        body[data-theme="dark"] h4 {
+            color: #d4a44c;
+        }
+
+        @media (max-width: 768px) {
+            .symptom-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
-<body class="dark-mode">
+<body>
+    <div class="container">
+        <header>
+            <div class="header-controls">
+                <a href="index.html" class="header-btn" title="Home"><i class="fas fa-home"></i></a>
+                <button class="header-btn" onclick="toggleTheme()" title="Toggle Theme"><i class="fas fa-moon" id="theme-icon"></i></button>
+            </div>
+            <h1>Notes</h1>
+            <p class="subtitle">Ruqyah Companion — Reference & Diagnostic Guide</p>
+        </header>
 
-<h1>Notes</h1>
+        <!-- ==================== TABLE OF CONTENTS ==================== -->
+        <div class="section">
+            <h2>Contents</h2>
+            <ul class="toc-list">
+                <li><a href="#part1"><strong>Part 1 — Foundational Notes</strong></a></li>
+                <li class="toc-sub"><a href="#p1-s1">1. The Reality of the Situation</a></li>
+                <li class="toc-sub"><a href="#p1-s2">2. The acquired state</a></li>
+                <li class="toc-sub"><a href="#p1-s3">3. The corruption pattern</a></li>
+                <li class="toc-sub"><a href="#p1-s4">4. State during the session</a></li>
+                <li class="toc-sub"><a href="#p1-s5">5. State afterward</a></li>
+                <li style="margin-top:0.5rem;"><a href="#part2"><strong>Part 2 — Session Underperformance Diagnostic Checklist</strong></a></li>
+                <li class="toc-sub"><a href="#p2-table">Obstacles table</a></li>
+                <li class="toc-sub"><a href="#p2-quick">Quick way to use this</a></li>
+            </ul>
+        </div>
 
-<p>1. Not you, not your fault, but real</p>
+        <!-- ==================== PART 1 ==================== -->
+        <div class="section" id="part1">
+            <details>
+                <summary><h2>Part 1 — Foundational Notes</h2></summary>
+                <div style="margin-top:1rem;">
 
-<p>State plainly: not an accusation, not their sin</p>
-<p>Name it: sihr — done to them by another's choice</p>
-<p>Precedent: happened even to the Prophet ﷺ — no reflection on their standing</p>
-<p>Reframe ask: not guilt, but cooperation — their will has to work alongside the ruqyah</p>
+            <h3 id="p1-s1">1. The Reality of the Situation</h3>
 
-<p>2. The acquired state</p>
+            <p>This is not an accusation against the person, nor is it a consequence of their wrongdoing.</p>
+            <p>Sihr is an act committed by another person who chooses to cause harm; the victim is not to blame for what has been done to them.</p>
+            <p>The Prophet ﷺ himself was affected by sihr, which shows that being afflicted does not reflect a person's faith, character, or standing with Allah.</p>
+            <p>Successful ruqyah requires the afflicted person to actively engage with the treatment through faith, patience, du'ā, and adherence to the guidance given.</p>
 
-<p>Started as intrusion, but time + no removal = it embeds</p>
-<p>Analogy: a path worn into ground — groove forms even without full consent</p>
-<p>Name the resistance directly: if they feel reluctance despite wanting freedom, that's the groove, not insincerity</p>
-<p>Reassure: struggle ≠ failure — this is a recognized stage, not backsliding</p>
+            <h3 id="p1-s2">2. The acquired state</h3>
 
-<p>3. The corruption pattern (dose to the host — shorten/soften if scrupulous rather than resistant)</p>
+            <p>Started as intrusion, but time + no removal = it embeds.</p>
+            <p>Analogy: a path worn into ground — groove forms even without full consent.</p>
+            <p>Name the resistance directly: if they feel reluctance despite wanting freedom, that's the groove, not insincerity.</p>
+            <p>Reassure: struggle ≠ failure — this is a recognised stage, not backsliding.</p>
 
-<p>Never starts obviously evil — always small, plausible, sometimes even "good"-seeming</p>
-<p>That's deliberate — an obvious evil gets rejected on sight</p>
-<p>Small foothold → escalation, left unchecked</p>
-<p>End point if unaddressed: shirk — misattributing power/reliance away from Allah</p>
-<p>Purpose of naming this: recognition = permanent closure, not fear for its own sake</p>
+            <h3 id="p1-s3">3. The Corruption Pattern</h3>
 
-<p>4. State during the session</p>
+            <p>Harmful influences do not usually begin with something that is clearly wrong. They often start with something small, believable, and easy to accept. Sometimes they can even seem helpful or good.</p>
+            <p>This is part of how they work. If something clearly evil appeared at the start, most people would reject it immediately. Instead, it begins with a small opening that seems harmless. If that opening is left unchecked, it can gradually grow into something much bigger.</p>
+            <p>A small compromise can become a habit. A habit can become dependence. Over time, a person can be pulled further away from what is right without realising how far they have travelled.</p>
+            <p>The real danger is not the first thought, feeling, or temptation itself. The danger is where it can lead if it is repeatedly accepted. At its worst, it can damage a person's Islam by causing them to place trust, fear, hope, reliance, or belief in powers that belong to Allah swt alone. This is the path that ultimately leads to shirk (associating partners with Allah swt).</p>
+            <p>The purpose of learning this pattern is not to make anyone fearful or suspicious. It is to help them recognise it. Once something is recognised clearly, it becomes much easier to stop it and close the door to it completely.</p>
+            <p>The aim is simple: notice the opening, refuse it early, and turn back to Allah. Recognition is not for fear's sake. It is so the matter can be identified, rejected, and not allowed to take root again.</p>
 
-<p>Wudu if possible</p>
-<p>Don't suppress reactions — let them happen, it's information not shame</p>
-<p>If urge to stop arises: silently note "this is not me," continue anyway</p>
-<p>Intention fixed: cure from Allah alone — not from you, not from the ruqyah itself as an object</p>
+            <h3 id="p1-s4">4. State During the Ruqyah Session</h3>
 
-<p>5. State afterward</p>
+            <p>Maintain wudu if possible.</p>
+            <p>Remain calm and attentive. Do not fear or feel embarrassed by reactions that may occur; they are observations, not judgments.</p>
+            <p>If discomfort, resistance, or an urge to stop arises, acknowledge it without engaging with it, then remain steadfast and continue the session.</p>
+            <p>Keep the heart focused on Allah. The Qur'an, adhkar, and ruqyah are means; cure and relief come from Allah alone.</p>
+            <p>Approach the session with patience, trust (tawakkul), and sincere hope in Allah's mercy and healing.</p>
 
-<p>Daily practice matters, but intention behind it matters equally</p>
-<p>At each pull-moment: recognize it, resist it — don't wait to feel ready first</p>
-<p>Acting against the pull while still feeling it is the sabr, not a lesser version of it</p>
-<p>Closing anchor: it was done by another's choice, holds power only by Allah's permission — freedom was never in doubt from Allah's side, only requires their steady return</p>
+            <h3 id="p1-s5">5. State After the Ruqyah Session</h3>
 
-<a class="back-link" href="index.html">← Back</a>
+            <p>Consistency is essential. The benefit of any programme lies not only in regular practice, but in carrying it out with sincerity, presence of heart, and reliance upon Allah.</p>
+            <p>Expect moments when old thoughts, emotions, urges, or patterns attempt to return. When they arise, recognise them for what they are, refuse to follow them, and turn back to what is right. Do not wait to feel strong, motivated, or ready before acting.</p>
+            <p>True sabr is not the absence of struggle. Sabr is remaining firm upon what is right while the struggle is still present. Resisting the pull despite feeling it is the very essence of patience and perseverance.</p>
+            <p>Continue to strengthen yourself through prayer, dhikr, recitation of the Qur'an, and obedience to Allah. Protection and recovery are preserved through a servant's ongoing return to their Lord.</p>
+            <p>Remember: whatever was done was the result of another person's choice and can affect only by Allah's permission. No created thing possesses independent power. Relief, protection, and freedom remain entirely within Allah's control, and are sought through steadfastness, trust in Him, and continual return to Him.</p>
 
-<script>
-(function(){
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        document.body.classList.remove('dark-mode');
-    }
-})();
-</script>
+                </div>
+            </details>
+        </div>
+
+        <!-- ==================== PART 2 ==================== -->
+        <div class="section" id="part2">
+            <details>
+                <summary><h2>Part 2 — Session Underperformance Diagnostic Checklist</h2></summary>
+                <div style="margin-top:1rem;">
+
+            <p class="spaced">When a session or case underperforms, run down the left column like a checklist rather than treating it as one big "resistance" — <strong>each row points to a different fix, not the same one repeated harder.</strong></p>
+
+            <h3 id="p2-table">Obstacles & Remedies</h3>
+
+            <table class="symptom-table">
+                <thead>
+                    <tr>
+                        <th>Requirement / Obstacle</th>
+                        <th>What it means, simply</th>
+                        <th>What blocks it</th>
+                        <th>What to check or do</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Sincerity<br>(ikhlāṣ)</strong></td>
+                        <td>Doing this purely for Allah — not for the ritual, not for you as the healer</td>
+                        <td>Host or raqi treating the process as the source of cure itself</td>
+                        <td>Redirect intention before/during session: cure is from Allah alone</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Faith<br>(īmān)</strong></td>
+                        <td>General belief that the Qur'an is true and powerful</td>
+                        <td>Weak or wavering general belief</td>
+                        <td>Usually already present in a practising host — less likely the gap</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complete acceptance<br>(qabūl)</strong></td>
+                        <td>The heart actually receiving what's recited, not just letting it be recited</td>
+                        <td>Distraction, dissociation, or the host mentally "not present" during recitation</td>
+                        <td>Watch for genuine engagement, not passive endurance, during sessions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Firm conviction<br>(yaqīn)</strong></td>
+                        <td>Settled certainty that this cure is working on this affliction, right now</td>
+                        <td>The gap we've discussed — knowing it's true in theory but not "landing"</td>
+                        <td>Ongoing <em>tafakkur</em> + <em>inābah</em>, built over time, not forced in one sitting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tawfīq<br>(being "guided" to it)</strong></td>
+                        <td>Allah granting success in how the Qur'an is used, beyond effort alone</td>
+                        <td>Outside anyone's direct control</td>
+                        <td>Sincere effort + du'ā — acknowledge this one isn't fully in your hands</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hastiness</strong></td>
+                        <td>Expecting the cure to have already worked</td>
+                        <td>Reading a slow response as proof of failure</td>
+                        <td>Manage pace and expectations explicitly — impatience itself blocks response</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Raqi's own state</strong></td>
+                        <td>Your soul-strength, closeness to Allah, purity of intention</td>
+                        <td>Relying on volume/duration instead of your own spiritual condition</td>
+                        <td>Check yourself, not just the host, when a case stalls</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sustaining yaqīn once present</strong></td>
+                        <td>Certainty doesn't need to be complete to help — it just needs to be growing</td>
+                        <td>Waiting to feel "fully certain" before continuing the struggle</td>
+                        <td>Let partial yaqīn carry the mujāhadah forward; don't wait for full conviction</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="guidance-block" id="p2-quick">
+                <p><strong>Quick way to use this:</strong> When a session or case underperforms, run down the left column like a checklist rather than treating it as one big "resistance" — each row points to a different fix, not the same one repeated harder.</p>
+            </div>
+
+                </div>
+            </details>
+        </div>
+
+        <footer>
+            <p>May Allah grant shifā' and make this a means of clarity and relief. Āmīn.</p>
+            <p>For Educational Purposes Only</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+            }
+        });
+    </script>
 </body>
 </html>
